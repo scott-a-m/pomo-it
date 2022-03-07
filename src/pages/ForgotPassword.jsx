@@ -54,6 +54,7 @@ const ForgotPassword = ({ setMessage, message, showMessage, userData }) => {
     if (message) {
       setMessage(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

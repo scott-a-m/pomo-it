@@ -75,6 +75,7 @@ const Login = ({ getUser, userData, showMessage, setMessage, message }) => {
     if (message) {
       setMessage(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
