@@ -35,14 +35,15 @@ const ForgotPassword = ({ setMessage, message, showMessage, userData }) => {
         "Success: Please check your email for reset password link."
       );
     } catch (err) {
-      showMessage("error-msg", "Error: Please try again", 5000);
       setbtnStatus((btnData) => ({
         text: "Submit",
         disabled: false,
       }));
       setEmail("");
-      console.log("error has occured");
-      console.log(err.message);
+      if (err.response.data.msg)
+        return showMessage("error-msg", err.response.data.msg, 5000);
+
+      showMessage("error-msg", "Error: Please try again", 5000);
     }
   };
 
