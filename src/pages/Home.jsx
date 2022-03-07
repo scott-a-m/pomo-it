@@ -31,20 +31,18 @@ const Home = ({
   const [displayItems, setDisplayItems] = useState(3);
 
   const displayDateTimeString = (date) => {
-    const offset = new Date().getTimezoneOffset() * 1000 * 60;
-    const offsetDate = new Date(date).valueOf() - offset;
-    const finalDate = new Date(offsetDate).toISOString();
+    const finalDate = date.toLocaleString();
+    const dateOne = finalDate.substring(0, 10);
+    const dateTwo = finalDate.substring(11, 16);
 
-    const strOne = finalDate.substring(0, 10);
-    const strTwo = finalDate.substring(11, 16);
-
-    return strTwo + " on " + strOne;
+    return "at " + dateTwo + " on " + dateOne;
   };
 
   const createDateTimeString = (date) => {
-    const offset = new Date().getTimezoneOffset() * 1000 * 60;
-    const offsetDate = new Date(date).valueOf() - offset;
-    const finalDate = new Date(offsetDate).toISOString();
+    // const offset = new Date().getTimezoneOffset() * 1000 * 60;
+    // const offsetDate = new Date(date).valueOf() - offset;
+    // const finalDate = new Date(offsetDate).toISOString();
+    const finalDate = date.toLocaleString();
     return finalDate.substring(0, 16);
   };
 
