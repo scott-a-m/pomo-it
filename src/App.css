@@ -344,6 +344,14 @@ h1 {
 
 }
 
+.success-msg Link {
+  color:green !important;
+}
+
+.success-msg Link:hover {
+  text-decoration: underline !important;
+}
+
 
 #session-increment, #break-increment, #session-decrement, #break-decrement {
   background-color: hsl(0, 100%, 75%);
