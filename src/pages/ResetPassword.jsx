@@ -52,7 +52,7 @@ const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
       setNewPassword("");
       showMessage(
         "success-msg",
-        `Success: Please <Link to="/login">Login</Link>`
+        `<p>Success: Please <Link to="/login">Login</Link></p>`
       );
     } catch (err) {
       showMessage("error-msg", "Error: Please try again", 5000);
