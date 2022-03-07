@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
   const query = new URLSearchParams(useLocation().search);
@@ -52,7 +52,9 @@ const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
       setNewPassword("");
       showMessage(
         "success-msg",
-        `<p>Success: Please <Link to="/login">Login</Link></p>`
+        <p>
+          Password updated! Please <Link to="/login">Login</Link>.
+        </p>
       );
     } catch (err) {
       showMessage("error-msg", "Error: Please try again", 5000);
