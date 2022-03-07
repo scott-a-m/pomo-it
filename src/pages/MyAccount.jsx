@@ -144,6 +144,7 @@ const MyAccount = ({
     if (message) {
       setMessage(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const closeWindow = (cat) => {

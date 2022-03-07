@@ -74,6 +74,7 @@ const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
     if (message) {
       setMessage(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

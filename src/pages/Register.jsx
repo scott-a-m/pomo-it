@@ -118,6 +118,7 @@ const Register = ({ userData, showMessage, message, setMessage }) => {
     if (message) {
       setMessage(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
