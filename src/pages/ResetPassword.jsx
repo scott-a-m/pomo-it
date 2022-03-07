@@ -15,14 +15,15 @@ const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
     disabled: false,
   });
 
-  const newPasswordData = {
-    password: newPassword,
-    token: query.get("token"),
-    email: query.get("email"),
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const newPasswordData = {
+      password: newPassword,
+      token: query.get("token"),
+      email: query.get("email"),
+    };
+
     setbtnStatus((btnData) => ({
       ...btnData,
       text: "Processing",
@@ -43,6 +44,8 @@ const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
       return;
     }
     try {
+      console.log(newPasswordData);
+
       await axios.post(`/api/v1/auth/reset-password`, newPasswordData);
       setbtnStatus((btnData) => ({
         ...btnData,
@@ -53,18 +56,25 @@ const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
       showMessage(
         "success-msg",
         <p>
-          Password updated! Please <Link to="/login">Login</Link>.
+          Password updated! Please{" "}
+          <Link to="/login" style={{ color: "green" }}>
+            Login
+          </Link>
+          .
         </p>
       );
     } catch (err) {
-      showMessage("error-msg", "Error: Please try again", 5000);
-      setbtnStatus((btnData) => ({
-        text: "Submit",
-        disabled: false,
-      }));
       setNewPassword("");
-      console.log("error has occured");
-      console.log(err.message);
+
+      if (err.response.data.msg) {
+        showMessage("error-msg", err.response.data.msg, 5000);
+        setbtnStatus((btnData) => ({
+          text: "Submit",
+          disabled: true,
+        }));
+        return;
+      }
+      showMessage("error-msg", "Error: Please try again", 5000);
     }
   };
 
