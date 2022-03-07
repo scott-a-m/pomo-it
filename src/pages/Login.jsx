@@ -40,7 +40,7 @@ const Login = ({ getUser, userData, showMessage, setMessage, message }) => {
         email: "",
         password: "",
       }));
-      showMessage("success-msg", "Login successful. Loading...", 10000);
+      showMessage("success-msg", "Login successful. Loading...");
       getUser();
     } catch (err) {
       setbtnStatus((btnData) => ({

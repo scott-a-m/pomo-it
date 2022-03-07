@@ -102,6 +102,13 @@ const Home = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadMore]);
 
+  useEffect(() => {
+    if (message) {
+      setMessage(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <HomeHeader
