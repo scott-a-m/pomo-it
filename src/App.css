@@ -13,6 +13,8 @@ body::before {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  /* 255, 255, 255 */
 }
 
 .logo {
@@ -107,7 +109,7 @@ h1 {
 
 
 #clock-block {
-  margin-top: 6rem;
+  margin-top: 4rem;
   margin-bottom: 2rem;
 
 }
@@ -337,18 +339,19 @@ h1 {
 
   background-color: white;
   text-align: center;
-  color:green;
+  color: green;
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
 
 }
 
-.success-msg Link {
-  color:green !important;
+.success-link {
+  color: green !important;
 }
 
-.success-msg Link:hover {
+.success-link:hover {
+  font-style: italic;
   text-decoration: underline !important;
 }
 
@@ -451,12 +454,50 @@ h1 {
   font-size: 2.5rem;
 }
 
+
+#welcome {
+  margin-top: 6rem;
+  text-align: center;
+  color: white;
+
+  text-shadow: 2px 2px 8px #FF0000;
+}
+
+
+#welcome-title {
+  text-align: center;
+  font-family: 'Akaya Telivigala', cursive;
+  font-size: 6rem;
+}
+
+#welcome-subtitle {
+  text-align: center;
+  font-family: 'Akaya Telivigala', cursive;
+  font-size: 3rem;
+}
+
+.start-link {
+  text-decoration: none;
+}
+
+.start-link:hover {
+  text-decoration: none;
+  text-shadow: 2px 2px 8px white;
+
+}
+
 a {
   color: white
 }
 
 a:visited {
   color: white
+}
+
+.about-link:hover {
+  color: red;
+  background: white;
+  text-decoration: none;
 }
 
 .form-box a:hover {
@@ -512,6 +553,16 @@ a:visited {
 
 @media (max-width: 650px) {
 
+  #welcome-title {
+
+    font-size: 4rem;
+  }
+  
+  #welcome-subtitle {
+
+    font-size: 2rem;
+  }
+
 
 
 
@@ -522,7 +573,6 @@ a:visited {
     border-radius: 1rem;
     margin-left: 5%;
     margin-right: 5%;
-    margin-top: 2rem;
     margin-bottom: 2rem;
   }
 

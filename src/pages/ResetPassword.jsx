@@ -57,7 +57,7 @@ const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
         "success-msg",
         <p>
           Password updated! Please{" "}
-          <Link to="/login" style={{ color: "green" }}>
+          <Link to="/login" className="success-link">
             Login
           </Link>
           .

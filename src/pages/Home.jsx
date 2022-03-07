@@ -9,6 +9,7 @@ import EditTask from "../components/EditTask";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "../components/HomeHeader";
+import Welcome from "../components/Welcome";
 
 const Home = ({
   userData,
@@ -107,6 +108,7 @@ const Home = ({
         setTasks={setTasks}
         setCreateTaskWindow={setCreateTaskWindow}
       />
+      <Welcome />
 
       <div>
         <div id="clock-block">

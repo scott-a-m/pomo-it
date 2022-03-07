@@ -12,12 +12,20 @@ class About extends React.Component {
       <div id="about">
         <h1 id="about-title">What is Pomo-it?</h1>
         <p>
-          <span id="pomo-it">Pomo-it</span> a time management app featuring a
-          timer and task manager to help you practice the{" "}
+          <span id="pomo-it">Pomo-it</span> a time management app featuring a{" "}
+          <a href="#frame" className="about-link">
+            timer
+          </a>{" "}
+          and{" "}
+          <a href="#tasks-block" className="about-link">
+            task manager
+          </a>{" "}
+          to help you practice the{" "}
           <a
             href="https://francescocirillo.com/pages/pomodoro-technique"
             target="_blank"
             rel="noreferrer"
+            className="about-link"
           >
             Pomodoro® Technique
           </a>
