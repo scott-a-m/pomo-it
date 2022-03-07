@@ -662,5 +662,6 @@ a:hover {
 
 #start_stop:hover, #reset:hover, #break-decrement:hover, #break-increment:hover, #session-decrement:hover, #session-increment:hover {
   /*   filter: invert(100%); */
-  color: black
+  color: red;
+
 }
