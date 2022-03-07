@@ -31,19 +31,23 @@ const Home = ({
   const [displayItems, setDisplayItems] = useState(3);
 
   const displayDateTimeString = (date) => {
-    const finalDate = date.toLocaleString();
+    const tempDate = new Date(date);
+    const finalDate = tempDate.toLocaleString();
     const dateOne = finalDate.substring(0, 10);
-    const dateTwo = finalDate.substring(11, 16);
-
+    const dateTwo = finalDate.substring(11, 17);
     return "at " + dateTwo + " on " + dateOne;
   };
 
   const createDateTimeString = (date) => {
-    // const offset = new Date().getTimezoneOffset() * 1000 * 60;
-    // const offsetDate = new Date(date).valueOf() - offset;
-    // const finalDate = new Date(offsetDate).toISOString();
-    const finalDate = date.toLocaleString();
-    return finalDate.substring(0, 16);
+    const tempDate = new Date(date);
+
+    const tempLocaleDate = tempDate.toLocaleString();
+    const dateA = tempLocaleDate.split("/");
+    const dateB = dateA[2].split(",");
+    const finalLocaleDate =
+      dateB[0] + "-" + dateA[1] + "-" + dateA[0] + dateB[1].replace(" ", "T");
+
+    return finalLocaleDate;
   };
 
   const loadMore = () => {
