@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
   const query = new URLSearchParams(useLocation().search);
