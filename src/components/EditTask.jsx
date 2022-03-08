@@ -27,8 +27,16 @@ const EditTask = ({
       text: "Saving",
       disabled: true,
     }));
+
+    const tempDate = new Date(taskData.due).toISOString();
+    const isoDate = tempDate.substring(0, 19);
+
     try {
-      await axios.patch(`/api/v1/tasks/edit-task/${taskId}`, taskData);
+      await axios.patch(`/api/v1/tasks/edit-task/${taskId}`, {
+        task: taskData.task,
+        info: taskData.info,
+        due: isoDate,
+      });
       getAllTasks();
       setItemId("");
     } catch (error) {

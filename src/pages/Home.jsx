@@ -33,23 +33,34 @@ const Home = ({
   const displayDateTimeString = (date) => {
     const tempDate = new Date(date);
 
-    const finalDate = tempDate.toLocaleString();
-    const dateOne = finalDate.substring(0, 10);
-    const dateTwo = finalDate.substring(11, 17);
-
-    return "at " + dateTwo + " on " + dateOne;
+    return tempDate.toLocaleString();
   };
 
   const createDateTimeString = (date) => {
-    const tempDate = new Date(date);
+    const tempDate = new Date(date).toLocaleString();
 
-    const tempLocaleDate = tempDate.toLocaleString();
-    const dateA = tempLocaleDate.split("/");
-    const dateB = dateA[2].split(",");
-    const finalLocaleDate =
-      dateB[0] + "-" + dateA[1] + "-" + dateA[0] + dateB[1].replace(" ", "T");
+    const dateArr = tempDate.split("/");
+    const dateArr2 = dateArr[2].split(",");
 
-    return finalLocaleDate;
+    const newDate =
+      dateArr2[0] +
+      "-" +
+      dateArr[1] +
+      "-" +
+      dateArr[0] +
+      dateArr2[1].replace(" ", "T");
+    console.log(newDate);
+
+    // import { DateTime } from "luxon";
+
+    // const tempDate = new Date(date).toISOString();
+    // const isoDate = tempDate.substring(0, 19);
+    // const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // const d = DateTime.fromISO(isoDate, { zone });
+    // console.log(d.toISO());
+    // console.log(d.toUTC().toISO());
+
+    return newDate;
   };
 
   const loadMore = () => {
@@ -182,7 +193,7 @@ const Home = ({
                 tasks.slice(0, displayItems).map((item, index) => (
                   <div key={index} className="tasks-list">
                     <div hidden={item._id === itemId ? true : false}>
-                      <div className="btn-task">
+                      <div>
                         <h3 className="task-name">{item.task}</h3>
                         <button
                           className="delete-btn"

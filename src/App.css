@@ -144,6 +144,8 @@ h1 {
 
 }
 
+
+
 /* add media queries for editing tasks here */
 
 .link:hover {
@@ -559,6 +561,8 @@ a:hover {
 
 
 @media (max-width: 650px) {
+
+
 
   #welcome-title {
 
