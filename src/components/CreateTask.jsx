@@ -23,13 +23,9 @@ const CreateTask = ({
   const createTask = async (e) => {
     e.preventDefault();
 
-    console.log("hi");
-    console.log(taskData.due);
+    const tempDate = new Date(taskData.due).toISOString();
 
-    // setTaskData((data) => ({
-    //   ...data,
-    //   due: ms,
-    // }));
+    const isoDate = tempDate.substring(0, 19);
 
     setbtnStatus((btnData) => ({
       ...btnData,
@@ -38,7 +34,11 @@ const CreateTask = ({
     }));
 
     try {
-      await axios.post(`/api/v1/tasks/create-task`, taskData);
+      await axios.post(`/api/v1/tasks/create-task`, {
+        task: taskData.task,
+        info: taskData.info,
+        due: isoDate,
+      });
       setTaskData(() => ({
         task: "",
         info: "",
