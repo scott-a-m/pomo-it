@@ -194,9 +194,13 @@ const Home = ({
                       </div>
                       <p>{item.info}</p>
                       <p className="date">
-                        <strong>Start: {item.createdAt} </strong>
+                        <strong>
+                          Start: {displayDateTimeString(item.createdAt)}{" "}
+                        </strong>
                         <br />
-                        <strong>Finish: {item.due} </strong>
+                        <strong>
+                          Finish: {displayDateTimeString(item.due)}{" "}
+                        </strong>
                       </p>
                       <div className="btn-task">
                         {item.complete === false ? (
