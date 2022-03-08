@@ -56,7 +56,7 @@ body::before {
   border: 1px hsl(0, 100%, 50%);
   border-radius: 0.2rem;
   color: hsl(0, 100%, 50%);
-  width: 100px;
+  width: 70px;
   margin-left: 0.5rem;
 
 }
@@ -143,8 +143,6 @@ h1 {
 
 
 }
-
-/* add media queries for editing tasks here */
 
 .link:hover {
   color: red !important;
@@ -269,6 +267,7 @@ h1 {
   text-align: center;
   height: 30px;
   min-width: 70px;
+  max-width: 70px;
   margin-left: 10px;
 
 }
@@ -289,6 +288,7 @@ h1 {
   text-align: center;
   height: 30px;
   min-width: 70px;
+  max-width: 70px;
   margin-left: 10px;
 
 }

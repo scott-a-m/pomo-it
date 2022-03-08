@@ -32,10 +32,12 @@ const Home = ({
 
   const displayDateTimeString = (date) => {
     const tempDate = new Date(date);
-    const finalDate = tempDate.toLocaleString();
-    const dateOne = finalDate.substring(0, 10);
-    const dateTwo = finalDate.substring(11, 17);
-    return "at " + dateTwo + " on " + dateOne;
+    // const finalDate = tempDate.toLocaleString();
+    // const dateOne = finalDate.substring(0, 10);
+    // const dateTwo = finalDate.substring(11, 17);
+    // return "at " + dateTwo + " on " + dateOne;
+
+    return tempDate.toUTCString();
   };
 
   const createDateTimeString = (date) => {
