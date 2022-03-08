@@ -32,12 +32,13 @@ const Home = ({
 
   const displayDateTimeString = (date) => {
     const tempDate = new Date(date);
+    console.log(date);
     // const finalDate = tempDate.toLocaleString();
     // const dateOne = finalDate.substring(0, 10);
     // const dateTwo = finalDate.substring(11, 17);
     // return "at " + dateTwo + " on " + dateOne;
 
-    return tempDate.toUTCString();
+    return tempDate.toLocaleString();
   };
 
   const createDateTimeString = (date) => {
@@ -182,7 +183,7 @@ const Home = ({
                 tasks.slice(0, displayItems).map((item, index) => (
                   <div key={index} className="tasks-list">
                     <div hidden={item._id === itemId ? true : false}>
-                      <div className="btn-task">
+                      <div className="">
                         <h3 className="task-name">{item.task}</h3>
                         <button
                           className="delete-btn"

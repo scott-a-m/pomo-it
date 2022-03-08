@@ -287,6 +287,7 @@ h1 {
   border: 1px black;
   color: white;
   text-align: center;
+  float: right;
   height: 30px;
   min-width: 70px;
   margin-left: 10px;
@@ -425,6 +426,8 @@ h1 {
 .task-name {
   font-family: 'Akaya Telivigala', cursive;
   font-size: 2rem;
+ overflow-wrap: break-word;
+
 
 }
 
