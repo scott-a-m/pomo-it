@@ -38,7 +38,7 @@ const Home = ({
     // const dateTwo = finalDate.substring(11, 17);
     // return "at " + dateTwo + " on " + dateOne;
 
-    return tempDate.toLocaleString();
+    return tempDate.toUTCString();
   };
 
   const createDateTimeString = (date) => {
@@ -195,11 +195,11 @@ const Home = ({
                       <p>{item.info}</p>
                       <p className="date">
                         <strong>
-                          Start: {displayDateTimeString(item.createdAt)}{" "}
+                          Start: {createDateTimeString(item.createdAt)}{" "}
                         </strong>
                         <br />
                         <strong>
-                          Finish: {displayDateTimeString(item.due)}{" "}
+                          Finish: {createDateTimeString(item.due)}{" "}
                         </strong>
                       </p>
                       <div className="btn-task">
