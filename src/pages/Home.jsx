@@ -32,13 +32,12 @@ const Home = ({
 
   const displayDateTimeString = (date) => {
     const tempDate = new Date(date);
-    console.log(date);
-    // const finalDate = tempDate.toLocaleString();
-    // const dateOne = finalDate.substring(0, 10);
-    // const dateTwo = finalDate.substring(11, 17);
-    // return "at " + dateTwo + " on " + dateOne;
 
-    return tempDate.toUTCString();
+    const finalDate = tempDate.toLocaleString();
+    const dateOne = finalDate.substring(0, 10);
+    const dateTwo = finalDate.substring(11, 17);
+
+    return "at " + dateTwo + " on " + dateOne;
   };
 
   const createDateTimeString = (date) => {
@@ -183,7 +182,7 @@ const Home = ({
                 tasks.slice(0, displayItems).map((item, index) => (
                   <div key={index} className="tasks-list">
                     <div hidden={item._id === itemId ? true : false}>
-                      <div className="">
+                      <div className="btn-task">
                         <h3 className="task-name">{item.task}</h3>
                         <button
                           className="delete-btn"
@@ -194,13 +193,11 @@ const Home = ({
                       </div>
                       <p>{item.info}</p>
                       <p className="date">
-                        <strong>
-                          Start: {createDateTimeString(item.createdAt)}{" "}
-                        </strong>
+                        <strong>Start: </strong>
+                        {displayDateTimeString(item.createdAt)}
                         <br />
-                        <strong>
-                          Finish: {createDateTimeString(item.due)}{" "}
-                        </strong>
+                        <strong>Finish: </strong>
+                        {displayDateTimeString(item.due)}
                       </p>
                       <div className="btn-task">
                         {item.complete === false ? (

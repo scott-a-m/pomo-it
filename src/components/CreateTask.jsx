@@ -23,6 +23,14 @@ const CreateTask = ({
   const createTask = async (e) => {
     e.preventDefault();
 
+    console.log("hi");
+    console.log(taskData.due);
+
+    // setTaskData((data) => ({
+    //   ...data,
+    //   due: ms,
+    // }));
+
     setbtnStatus((btnData) => ({
       ...btnData,
       text: "Loading",
