@@ -6,6 +6,7 @@ import About from "../components/About";
 import Clock from "../components/Clock";
 import CreateTask from "../components/CreateTask";
 import EditTask from "../components/EditTask";
+import DeleteTask from "../components/DeleteTask";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "../components/HomeHeader";
@@ -28,6 +29,7 @@ const Home = ({
     due: "",
   });
   const [itemId, setItemId] = useState(null);
+  const [cat, setCat] = useState(null);
   const [displayItems, setDisplayItems] = useState(3);
 
   const displayDateTimeString = (date) => {
@@ -78,7 +80,7 @@ const Home = ({
     setDisplayItems(displayItems + 5);
   };
 
-  const openEditTaskWindow = (item) => {
+  const openEditDeleteTaskWindow = (item, cat) => {
     setTaskData({
       task: item.task,
       info: item.info,
@@ -86,6 +88,7 @@ const Home = ({
     });
 
     setItemId(item._id);
+    setCat(cat);
   };
 
   const getAllTasks = async () => {
@@ -101,14 +104,14 @@ const Home = ({
     }
   };
 
-  const deleteTask = async (taskId) => {
-    try {
-      await axios.delete(`/api/v1/tasks/delete-task/${taskId}`);
-      getAllTasks();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const deleteTask = async (taskId) => {
+  //   try {
+  //     await axios.delete(`/api/v1/tasks/delete-task/${taskId}`);
+  //     getAllTasks();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     if (userData) {
@@ -160,12 +163,14 @@ const Home = ({
                     icon={faCircleMinus}
                     onClick={() => setCreateTaskWindow(!createTaskWindow)}
                     size="2x"
+                    className="create-task-icon"
                   />
                 ) : (
                   <FontAwesomeIcon
                     icon={faCirclePlus}
                     onClick={() => setCreateTaskWindow(!createTaskWindow)}
                     size="2x"
+                    className="create-task-icon"
                   />
                 )}
               </div>
@@ -207,7 +212,9 @@ const Home = ({
                         <h3 className="task-name">{item.task}</h3>
                         <button
                           className="delete-btn"
-                          onClick={() => deleteTask(item._id)}
+                          onClick={() =>
+                            openEditDeleteTaskWindow(item, "delete")
+                          }
                         >
                           Delete
                         </button>
@@ -230,7 +237,7 @@ const Home = ({
                         )}
                         <button
                           className="edit-btn"
-                          onClick={() => openEditTaskWindow(item)}
+                          onClick={() => openEditDeleteTaskWindow(item, "edit")}
                         >
                           Edit
                         </button>
@@ -245,7 +252,22 @@ const Home = ({
                         taskId={item._id}
                         itemId={itemId}
                         setItemId={setItemId}
+                        cat={cat}
+                        setCat={setCat}
                         createDateTimeString={createDateTimeString}
+                        showMessage={showMessage}
+                        message={message}
+                        setMessage={setMessage}
+                      />
+                      <DeleteTask
+                        getAllTasks={getAllTasks}
+                        taskData={taskData}
+                        setTaskData={setTaskData}
+                        taskId={item._id}
+                        itemId={itemId}
+                        setItemId={setItemId}
+                        cat={cat}
+                        setCat={setCat}
                         showMessage={showMessage}
                         message={message}
                         setMessage={setMessage}

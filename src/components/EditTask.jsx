@@ -13,10 +13,25 @@ const EditTask = ({
   showMessage,
   message,
   setMessage,
+  cat,
+  setCat,
 }) => {
   const [btnStatus, setbtnStatus] = useState({
     text: "Save",
     disabled: false,
+  });
+
+  const [match, setMatch] = useState(
+    window.matchMedia("(min-width: 650px)").matches
+  );
+
+  const checkWidth = (event) => {
+    setMatch(event.matches);
+  };
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 650px)")
+      .addEventListener("change", checkWidth);
   });
 
   const editTask = async (e) => {
@@ -40,6 +55,7 @@ const EditTask = ({
       });
       getAllTasks();
       setItemId("");
+      setCat(null);
     } catch (error) {
       showMessage(
         "error-msg",
@@ -76,84 +92,168 @@ const EditTask = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 
-  return (
-    <form hidden={itemId === taskId ? false : true} onSubmit={editTask}>
-      <h3 className="sub-head">Edit Task</h3>
-      {message && message}
+  useEffect(() => {
+    if (message) {
+      setMessage(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-      <div className="edit-task-block">
-        <div className="label-block">
-          <label htmlFor="task" className="create-task-label">
-            Task
-          </label>
-          <label htmlFor="info" className="create-task-label">
-            Info
-          </label>
-          <label htmlFor="due" className="create-task-label">
-            Due
-          </label>
+  if (match)
+    return (
+      <form
+        hidden={itemId === taskId && cat === "edit" ? false : true}
+        onSubmit={editTask}
+      >
+        <h3 className="sub-head">Edit Task</h3>
+        {message && message}
+
+        <div className="edit-task-block">
+          <div className="label-block">
+            <label htmlFor="task" className="create-task-label">
+              Task
+            </label>
+            <label htmlFor="info" className="create-task-label">
+              Info
+            </label>
+            <label htmlFor="due" className="create-task-label">
+              Due
+            </label>
+          </div>
+          <div className="input-block">
+            <input
+              type="text"
+              value={taskData.task}
+              name="task"
+              onChange={handleChange}
+              className="form-input"
+              required={true}
+            />
+            <input
+              type="text"
+              value={taskData.info}
+              name="info"
+              onChange={handleChange}
+              className="form-input"
+              required={true}
+            />
+            <input
+              type="datetime-local"
+              value={taskData.due}
+              name="due"
+              onChange={handleChange}
+              className="form-input"
+              required={true}
+            />
+          </div>
         </div>
-        <div className="input-block">
+        <div>
+          <span>
+            <strong>Status: --</strong>
+          </span>
           <input
-            type="text"
-            value={taskData.task}
-            name="task"
+            type="radio"
+            id="incomplete"
+            name="complete"
+            value={false}
+            className="radio-btn"
             onChange={handleChange}
-            className="form-input"
-            required={true}
           />
+          <label htmlFor="incomplete">Incomplete</label>
+          <span> -- </span>
           <input
-            type="text"
-            value={taskData.info}
-            name="info"
+            type="radio"
+            id="done"
+            name="complete"
+            value={true}
+            className="radio-btn"
             onChange={handleChange}
-            className="form-input"
-            required={true}
           />
+          <label htmlFor="done">Done</label>
+        </div>
+        <div className="btn-task">
+          <button className="edit-btn" disabled={btnStatus.disabled}>
+            {btnStatus.text}
+          </button>
+          <button className="edit-btn" onClick={cancelEdit}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    );
+  else
+    return (
+      <form
+        hidden={itemId === taskId && cat === "edit" ? false : true}
+        onSubmit={editTask}
+        style={{ textAlign: "center" }}
+      >
+        <h3 className="sub-head">Edit Task</h3>
+        {message && message}
+        <label htmlFor="task">Task</label>
+
+        <input
+          type="text"
+          value={taskData.task}
+          name="task"
+          onChange={handleChange}
+          className="form-input"
+          required={true}
+        />
+        <label htmlFor="info">Info</label>
+
+        <input
+          type="text"
+          value={taskData.info}
+          name="info"
+          onChange={handleChange}
+          className="form-input"
+          required={true}
+        />
+        <label htmlFor="due">Due</label>
+
+        <input
+          type="datetime-local"
+          value={taskData.due}
+          name="due"
+          onChange={handleChange}
+          className="form-input"
+          required={true}
+        />
+        <div style={{ marginTop: "1rem", marginBottom: "1rem" }}>
+          <p>
+            <strong>Status:</strong>
+          </p>
+          <label htmlFor="incomplete">Incomplete--</label>
           <input
-            type="datetime-local"
-            value={taskData.due}
-            name="due"
+            type="radio"
+            id="incomplete"
+            name="complete"
+            value={false}
+            className="radio-btn"
             onChange={handleChange}
-            className="form-input"
-            required={true}
+          />
+          <br />
+          <label htmlFor="done">Done--</label>
+          <input
+            type="radio"
+            id="done"
+            name="complete"
+            value={true}
+            className="radio-btn"
+            onChange={handleChange}
           />
         </div>
-      </div>
-      <div>
-        <span>
-          <strong>Status: --</strong>
-        </span>
-        <input
-          type="radio"
-          id="incomplete"
-          name="complete"
-          value={false}
-          className="radio-btn"
-          onChange={handleChange}
-        />
-        <label htmlFor="incomplete">Incomplete</label>
-        <span> -- </span>
-        <input
-          type="radio"
-          id="done"
-          name="complete"
-          value={true}
-          className="radio-btn"
-          onChange={handleChange}
-        />
-        <label htmlFor="done">Done</label>
-      </div>
-      <div className="btn-task">
-        <button className="edit-btn" disabled={btnStatus.disabled}>
-          {btnStatus.text}
-        </button>
-        <button className="edit-btn" onClick={cancelEdit}>
-          Cancel
-        </button>
-      </div>
-    </form>
-  );
+        <div className="btn-task">
+          <button className="edit-btn" disabled={btnStatus.disabled}>
+            {btnStatus.text}
+          </button>
+          <button className="edit-btn" onClick={cancelEdit}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    );
 };
 
 export default EditTask;
