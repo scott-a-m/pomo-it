@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
@@ -11,15 +11,22 @@ const HomeHeader = ({
   setTasks,
   setCreateTaskWindow,
 }) => {
+  const [logoutBtn, setLogoutBtn] = useState(false);
   const navigate = useNavigate();
 
   const logoutUser = async () => {
-    await axios.delete("/api/v1/auth/logout");
-    console.log(userData);
-    setUserData(null);
-    setTasks(null);
-    setCreateTaskWindow(false);
-    navigate("/");
+    setLogoutBtn(true);
+    try {
+      await axios.delete("/api/v1/auth/logout");
+      console.log(userData);
+      setUserData(null);
+      setTasks(null);
+      setCreateTaskWindow(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+    setLogoutBtn(false);
   };
 
   return (
@@ -53,7 +60,11 @@ const HomeHeader = ({
                 >
                   My Account
                 </Link>
-                <button onClick={logoutUser} className="logout-btn">
+                <button
+                  onClick={logoutUser}
+                  className="logout-btn"
+                  disabled={logoutBtn}
+                >
                   Logout
                 </button>
               </>

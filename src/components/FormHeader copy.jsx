@@ -7,12 +7,14 @@ import axios from "axios";
 
 const FormHeader = ({ userData, setUserData }) => {
   const [logoutBtn, setLogoutBtn] = useState(false);
+  const navigate = useNavigate();
 
   const logoutUser = async () => {
     setLogoutBtn(true);
     try {
       await axios.delete("/api/v1/auth/logout");
       setUserData(null);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -37,25 +39,15 @@ const FormHeader = ({ userData, setUserData }) => {
               Home
             </Link>
           </Nav>
-
           <Nav>
             {userData ? (
-              <>
-                <Link
-                  to="/user/account"
-                  style={{ textDecoration: "none" }}
-                  className="navbar-link"
-                >
-                  My Account
-                </Link>
-                <button
-                  onClick={logoutUser}
-                  className="logout-btn"
-                  disabled={logoutBtn}
-                >
-                  Logout
-                </button>
-              </>
+              <button
+                onClick={logoutUser}
+                className="logout-btn"
+                disabled={logoutBtn}
+              >
+                Logout
+              </button>
             ) : (
               <Link to="/login">
                 <button className="logout-btn">Login</button>
