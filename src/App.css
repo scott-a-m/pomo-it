@@ -107,6 +107,11 @@ h1 {
 
 }
 
+h2 {
+  font-family: 'Akaya Telivigala', cursive;
+  font-size: 2rem;
+}
+
 
 #clock-block {
   margin-top: 4rem;

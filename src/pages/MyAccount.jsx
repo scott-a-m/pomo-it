@@ -26,6 +26,19 @@ const MyAccount = ({
     disabled: false,
   });
 
+  const [match, setMatch] = useState(
+    window.matchMedia("(min-width: 650px)").matches
+  );
+
+  const checkWidth = (event) => {
+    setMatch(event.matches);
+  };
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 650px)")
+      .addEventListener("change", checkWidth);
+  });
+
   const updateName = async (e) => {
     e.preventDefault();
 
@@ -162,11 +175,11 @@ const MyAccount = ({
     setHideWindow(false);
   };
 
-  return (
-    <div>
-      <FormHeader userData={userData} />
-      <div className="form-wrapper">
-        <div style={{ margin: "0 auto !important" }}>
+  if (match)
+    return (
+      <div>
+        <FormHeader userData={userData} />
+        <div className="form-wrapper">
           <div className="form-box">
             {userData && (
               <div>
@@ -262,8 +275,112 @@ const MyAccount = ({
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  else
+    return (
+      <div>
+        <FormHeader userData={userData} />
+        <div className="form-wrapper">
+          <div className="form-box">
+            {userData && (
+              <div>
+                <h2 className="">
+                  {polishName(userData.user.name)}
+                  <br />
+                  Account
+                </h2>
+                {!hideWindow && (
+                  <div style={{ fontSize: "1.2rem" }}>
+                    <p>
+                      Welcome <strong>{userData.user.name}</strong>
+                    </p>
+                    <p>
+                      <strong>Id: </strong>
+                      {userData.user.userId}.
+                    </p>
+
+                    <button
+                      className="account-form-btn"
+                      onClick={() => {
+                        setUpdateNameWindow(true);
+                        setHideWindow(true);
+                      }}
+                    >
+                      Update Username
+                    </button>
+                    <button
+                      className="account-form-btn"
+                      onClick={() => {
+                        setUpdatePasswordWindow(true);
+                        setHideWindow(true);
+                      }}
+                    >
+                      Update Password
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {updateNameWindow && (
+              <form onSubmit={updateName}>
+                <h3 className="sub-head">Update Username</h3>
+                {message && message}
+
+                <AccountFormRow
+                  name="name"
+                  type="text"
+                  value={newName}
+                  onChangeFunc={handleChange}
+                />
+                <br />
+                <div className="btn-task">
+                  <button className="edit-btn" disabled={btnStatus.disabled}>
+                    {btnStatus.text}
+                  </button>
+                  <button
+                    className="edit-btn"
+                    onClick={() => closeWindow("name")}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
+            {updatePasswordWindow && (
+              <form onSubmit={updatePassword}>
+                <h3 className="sub-head">Update Password</h3>
+                {message && message}
+
+                <AccountFormRow
+                  name="old"
+                  type="password"
+                  value={passwordData.old}
+                  onChangeFunc={handleChange}
+                />
+                <AccountFormRow
+                  name="new"
+                  type="password"
+                  value={passwordData.new}
+                  onChangeFunc={handleChange}
+                />
+                <br />
+                <div className="btn-task">
+                  <button className="edit-btn" disabled={btnStatus.disabled}>
+                    {btnStatus.text}
+                  </button>
+                  <button
+                    className="edit-btn"
+                    onClick={() => closeWindow("pass")}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    );
 };
 
 export default MyAccount;
