@@ -83,7 +83,6 @@ const Home = ({
       task: item.task,
       info: item.info,
       due: item.due,
-      complete: item.complete,
     });
 
     setItemId(item._id);
