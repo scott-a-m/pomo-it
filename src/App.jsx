@@ -67,6 +67,7 @@ const App = () => {
           element={
             <MyAccount
               userData={userData}
+              setUserData={setUserData}
               polishName={polishName}
               getUser={getUser}
               showMessage={showMessage}
@@ -111,6 +112,7 @@ const App = () => {
           path="/user/reset-password"
           element={
             <ResetPassword
+              setUserData={setUserData}
               showMessage={showMessage}
               message={message}
               setMessage={setMessage}
@@ -127,6 +129,7 @@ const App = () => {
               message={message}
               setMessage={setMessage}
               userData={userData}
+              setUserData={setUserData}
             />
           }
           exact

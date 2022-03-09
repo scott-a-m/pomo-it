@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AccountFormRow from "../components/AccountFormRow";
 import FormHeader from "../components/FormHeader";
 
@@ -11,6 +12,7 @@ const MyAccount = ({
   message,
   getUser,
   setMessage,
+  setUserData,
 }) => {
   const [passwordData, setPasswordData] = useState({
     old: "",
@@ -29,6 +31,8 @@ const MyAccount = ({
   const [match, setMatch] = useState(
     window.matchMedia("(min-width: 650px)").matches
   );
+
+  const navigate = useNavigate();
 
   const checkWidth = (event) => {
     setMatch(event.matches);
@@ -154,6 +158,13 @@ const MyAccount = ({
   };
 
   useEffect(() => {
+    if (!userData) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
+
+  useEffect(() => {
     if (message) {
       setMessage(null);
     }
@@ -178,7 +189,7 @@ const MyAccount = ({
   if (match)
     return (
       <div>
-        <FormHeader userData={userData} />
+        <FormHeader userData={userData} setUserData={setUserData} />
         <div className="form-wrapper">
           <div className="form-box">
             {userData && (

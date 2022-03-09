@@ -5,7 +5,13 @@ import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
 import { Link, useLocation } from "react-router-dom";
 
-const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
+const ResetPassword = ({
+  userData,
+  setMessage,
+  message,
+  showMessage,
+  setUserData,
+}) => {
   const query = new URLSearchParams(useLocation().search);
 
   const [newPassword, setNewPassword] = useState("");
@@ -91,7 +97,7 @@ const ResetPassword = ({ userData, setMessage, message, showMessage }) => {
 
   return (
     <div>
-      <FormHeader userData={userData} />
+      <FormHeader userData={userData} setUserData={setUserData} />
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">New Password</h1>

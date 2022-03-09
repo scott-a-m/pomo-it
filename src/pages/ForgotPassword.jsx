@@ -4,7 +4,13 @@ import { useState } from "react";
 import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
 
-const ForgotPassword = ({ setMessage, message, showMessage, userData }) => {
+const ForgotPassword = ({
+  setMessage,
+  message,
+  showMessage,
+  userData,
+  setUserData,
+}) => {
   const [email, setEmail] = useState("");
 
   const [btnStatus, setbtnStatus] = useState({
@@ -60,7 +66,7 @@ const ForgotPassword = ({ setMessage, message, showMessage, userData }) => {
 
   return (
     <div>
-      <FormHeader userData={userData} />
+      <FormHeader userData={userData} setUserData={setUserData} />
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">Forgot Password</h1>
