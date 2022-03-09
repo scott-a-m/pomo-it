@@ -31,9 +31,20 @@ const Home = ({
   const [displayItems, setDisplayItems] = useState(3);
 
   const displayDateTimeString = (date) => {
-    const tempDate = new Date(date);
+    const tempDate = new Date(date).toLocaleString();
 
-    return tempDate.toLocaleString();
+    const dateArr = tempDate.split("/");
+    const dateArr2 = dateArr[2].split(",");
+
+    const newDate =
+      dateArr2[0] +
+      "-" +
+      dateArr[1] +
+      "-" +
+      dateArr[0] +
+      dateArr2[1].replace(" ", " at ").substring(0, 9);
+
+    return newDate;
   };
 
   const createDateTimeString = (date) => {
@@ -48,7 +59,7 @@ const Home = ({
       dateArr[1] +
       "-" +
       dateArr[0] +
-      dateArr2[1].replace(" ", "T");
+      dateArr2[1].replace(" ", "T").substring(0, 6);
     console.log(newDate);
 
     // import { DateTime } from "luxon";
