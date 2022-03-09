@@ -183,14 +183,13 @@ const MyAccount = ({
           <div className="form-box">
             {userData && (
               <div>
-                <h1 className="">{polishName(userData.user.name)} Account</h1>
+                <h1 style={{ marginBottom: "1rem" }}>
+                  {polishName(userData.user.name)} Account
+                </h1>
                 {!hideWindow && (
                   <div style={{ fontSize: "1.2rem" }}>
                     <p>
-                      Welcome <strong>{userData.user.name}</strong>
-                    </p>
-                    <p>
-                      <strong>Id: </strong>
+                      <strong>User Id: </strong>
                       {userData.user.userId}.
                     </p>
 
@@ -284,7 +283,7 @@ const MyAccount = ({
           <div className="form-box">
             {userData && (
               <div>
-                <h2 className="">
+                <h2 style={{ marginBottom: "1rem" }}>
                   {polishName(userData.user.name)}
                   <br />
                   Account
@@ -292,10 +291,7 @@ const MyAccount = ({
                 {!hideWindow && (
                   <div style={{ fontSize: "1.2rem" }}>
                     <p>
-                      Welcome <strong>{userData.user.name}</strong>
-                    </p>
-                    <p>
-                      <strong>Id: </strong>
+                      <strong>User Id: </strong>
                       {userData.user.userId}.
                     </p>
 
@@ -305,6 +301,7 @@ const MyAccount = ({
                         setUpdateNameWindow(true);
                         setHideWindow(true);
                       }}
+                      style={{ margin: "0.5rem" }}
                     >
                       Update Username
                     </button>
@@ -314,6 +311,7 @@ const MyAccount = ({
                         setUpdatePasswordWindow(true);
                         setHideWindow(true);
                       }}
+                      style={{ margin: "0.5rem" }}
                     >
                       Update Password
                     </button>

@@ -109,7 +109,7 @@ h1 {
 
 h2 {
   font-family: 'Akaya Telivigala', cursive;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 
@@ -151,7 +151,7 @@ h2 {
 
 
 
-/* add media queries for editing tasks here */
+
 
 .link:hover {
   color: red !important;
