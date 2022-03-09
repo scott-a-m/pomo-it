@@ -36,6 +36,7 @@ const EditTask = ({
         task: taskData.task,
         info: taskData.info,
         due: isoDate,
+        complete: taskData.complete,
       });
       getAllTasks();
       setItemId("");
