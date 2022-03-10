@@ -12,6 +12,7 @@ import VerifyEmail from "./pages/VerfiyEmail";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import MyAccount from "./pages/MyAccount";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const [userData, setUserData] = useState(null);
@@ -133,6 +134,10 @@ const App = () => {
             />
           }
           exact
+        />
+        <Route
+          path="*"
+          element={<NotFound userData={userData} setUserData={setUserData} />}
         />
       </Routes>
     </BrowserRouter>

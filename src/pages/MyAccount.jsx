@@ -289,7 +289,7 @@ const MyAccount = ({
   else
     return (
       <div>
-        <FormHeader userData={userData} />
+        <FormHeader userData={userData} setUserData={setUserData} />
         <div className="form-wrapper">
           <div className="form-box">
             {userData && (
