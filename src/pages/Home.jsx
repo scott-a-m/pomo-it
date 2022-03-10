@@ -30,7 +30,7 @@ const Home = ({
   });
   const [itemId, setItemId] = useState(null);
   const [cat, setCat] = useState(null);
-  const [displayItems, setDisplayItems] = useState(3);
+  const [displayItems, setDisplayItems] = useState(7);
 
   const displayDateTimeString = (date) => {
     const tempDate = new Date(date).toLocaleString();
@@ -77,7 +77,7 @@ const Home = ({
   };
 
   const loadMore = () => {
-    setDisplayItems(displayItems + 5);
+    setDisplayItems(displayItems + 7);
   };
 
   const openEditDeleteTaskWindow = (item, cat) => {
