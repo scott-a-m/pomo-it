@@ -5,6 +5,7 @@ import {
   faGithub,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 class About extends React.Component {
   render() {
@@ -75,6 +76,14 @@ class About extends React.Component {
           >
             <FontAwesomeIcon
               icon={faFreeCodeCamp}
+              size="2x"
+              border
+              className="contact-icon"
+            />
+          </a>
+          <a href="mailto:scott_a_mitchell@163.com">
+            <FontAwesomeIcon
+              icon={faEnvelope}
               size="2x"
               border
               className="contact-icon"
