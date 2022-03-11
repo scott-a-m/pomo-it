@@ -58,7 +58,7 @@ class About extends React.Component {
             />
           </a>
           <a
-            href="https://twitter.com/_scott_a_m"
+            href="https://twitter.com/scotts_dev"
             target="_blank"
             rel="noreferrer"
           >
