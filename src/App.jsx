@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import React from "react";
 import Home from "./pages/Home";
-import Tasks from "./pages/Tasks";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import axios from "axios";
@@ -78,7 +77,6 @@ const App = () => {
           }
           exact
         />
-        <Route path="/tasks" element={<Tasks />} exact />
         <Route
           path="/login"
           element={

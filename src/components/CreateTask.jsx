@@ -36,6 +36,26 @@ const CreateTask = ({
   const createTask = async (e) => {
     e.preventDefault();
 
+    // first check whether task deadline is at least 5 minutes after the current time
+
+    const fiveMinutes = 1000 * 60 * 5;
+    const deadlineMilliseconds = new Date(taskData.due).getTime();
+
+    if (deadlineMilliseconds < Date.now() + fiveMinutes) {
+      showMessage(
+        "error-msg",
+        "please choose due time at least five minutes after current time",
+        5000
+      );
+
+      setbtnStatus((btnData) => ({
+        ...btnData,
+        text: "Create",
+        disabled: false,
+      }));
+      return;
+    }
+
     const tempDate = new Date(taskData.due).toISOString();
 
     const isoDate = tempDate.substring(0, 19);
