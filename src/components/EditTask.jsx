@@ -25,6 +25,8 @@ const EditTask = ({
     window.matchMedia("(min-width: 650px)").matches
   );
 
+  const [originalDeadline, setOriginalDeadline] = useState("");
+
   const checkWidth = (event) => {
     setMatch(event.matches);
   };
@@ -44,23 +46,26 @@ const EditTask = ({
     }));
 
     // first check whether task deadline is at least 5 minutes after the current time
+    // (not the case if deadline has not been changed and user is simply changing status)
 
     const fiveMinutes = 1000 * 60 * 5;
     const deadlineMilliseconds = new Date(taskData.due).getTime();
 
-    if (deadlineMilliseconds < Date.now() + fiveMinutes) {
-      showMessage(
-        "error-msg",
-        "please choose due time at least five minutes after current time",
-        5000
-      );
+    if (originalDeadline !== taskData.due) {
+      if (deadlineMilliseconds < Date.now() + fiveMinutes) {
+        showMessage(
+          "error-msg",
+          "either keep original due time or choose one at least five minutes after current time",
+          5000
+        );
 
-      setbtnStatus((btnData) => ({
-        ...btnData,
-        text: "Save",
-        disabled: false,
-      }));
-      return;
+        setbtnStatus((btnData) => ({
+          ...btnData,
+          text: "Save",
+          disabled: false,
+        }));
+        return;
+      }
     }
 
     const tempDate = new Date(taskData.due).toISOString();
@@ -108,6 +113,7 @@ const EditTask = ({
         ...data,
         due: createDateTimeString(taskData.due),
       }));
+      setOriginalDeadline(createDateTimeString(taskData.due));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
