@@ -63,6 +63,7 @@ const Home = ({
       dateArr[0] +
       dateArr2[1].replace(" ", "T").substring(0, 6);
     console.log(newDate);
+    console.log("hi");
 
     // import { DateTime } from "luxon";
 
