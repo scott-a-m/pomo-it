@@ -111,6 +111,13 @@ const CreateTask = ({
     }));
   };
 
+  useEffect(() => {
+    if (message) {
+      setMessage(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (match)
     return (
       <div className="tasks-list">
