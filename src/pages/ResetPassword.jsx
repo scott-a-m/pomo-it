@@ -4,14 +4,12 @@ import { useState } from "react";
 import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
 import { Link, useLocation } from "react-router-dom";
+import { useGlobalContext } from "../context";
+import Message from "../components/Message";
 
-const ResetPassword = ({
-  userData,
-  setMessage,
-  message,
-  showMessage,
-  setUserData,
-}) => {
+const ResetPassword = () => {
+  const { showMessage, message, userData, setUserData } = useGlobalContext();
+
   const query = new URLSearchParams(useLocation().search);
 
   const [newPassword, setNewPassword] = useState("");
@@ -36,11 +34,11 @@ const ResetPassword = ({
       disabled: true,
     }));
 
-    if (newPassword.length < 3) {
+    if (newPassword.length < 6) {
       showMessage(
+        true,
         "error-msg",
-        "please make sure password has six or more characters",
-        5000
+        "please make sure password has six or more characters"
       );
       setbtnStatus((btnData) => ({
         text: "Submit",
@@ -50,8 +48,6 @@ const ResetPassword = ({
       return;
     }
     try {
-      console.log(newPasswordData);
-
       await axios.post(`/api/v1/auth/reset-password`, newPasswordData);
       setbtnStatus((btnData) => ({
         ...btnData,
@@ -60,6 +56,7 @@ const ResetPassword = ({
       }));
       setNewPassword("");
       showMessage(
+        true,
         "success-msg",
         <p>
           Password updated! Please{" "}
@@ -73,14 +70,14 @@ const ResetPassword = ({
       setNewPassword("");
 
       if (err.response.data.msg) {
-        showMessage("error-msg", err.response.data.msg, 5000);
+        showMessage(true, "error-msg", err.response.data.msg);
         setbtnStatus((btnData) => ({
           text: "Submit",
-          disabled: true,
+          disabled: false,
         }));
         return;
       }
-      showMessage("error-msg", "Error: Please try again", 5000);
+      showMessage(true, "error-msg", "Error: Please try again");
     }
   };
 
@@ -89,11 +86,8 @@ const ResetPassword = ({
   };
 
   useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    showMessage();
+  }, [showMessage]);
 
   return (
     <div>
@@ -101,7 +95,7 @@ const ResetPassword = ({
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">New Password</h1>
-          {message && message}
+          {message.show && <Message />}
           <form onSubmit={handleSubmit}>
             <FormRow
               name="password"

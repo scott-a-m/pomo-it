@@ -1,6 +1,8 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
+import { useGlobalContext } from "../context";
+import Message from "./Message";
 
 const DeleteTask = ({
   taskData,
@@ -8,12 +10,11 @@ const DeleteTask = ({
   taskId,
   setItemId,
   itemId,
-  showMessage,
-  message,
-  setMessage,
   cat,
   setCat,
 }) => {
+  const { showMessage, message } = useGlobalContext();
+
   const [btnStatus, setbtnStatus] = useState({
     text: "DELETE",
     disabled: false,
@@ -31,7 +32,7 @@ const DeleteTask = ({
       setCat(null);
     } catch (error) {
       console.log(error);
-      showMessage("error-msg", "Oops an error occured. Please try again", 5000);
+      showMessage(true, "error-msg", "Oops an error occured. Please try again");
     }
     setbtnStatus({
       text: "DELETE",
@@ -44,20 +45,13 @@ const DeleteTask = ({
     setItemId("");
   };
 
-  useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <div
       hidden={itemId === taskId && cat === "delete" ? false : true}
       className="delete-task-block"
     >
       <h3 className="sub-head">Delete Task</h3>
-      {message && message}
+      {message && <Message />}
       <div className="error-msg">
         <p style={{ fontSize: "1.2rem" }}>
           Are you sure you want to delete Task:

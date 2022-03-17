@@ -4,16 +4,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountFormRow from "../components/AccountFormRow";
 import FormHeader from "../components/FormHeader";
+import { useGlobalContext } from "../context";
+import Message from "../components/Message";
 
-const MyAccount = ({
-  userData,
-  polishName,
-  showMessage,
-  message,
-  getUser,
-  setMessage,
-  setUserData,
-}) => {
+const MyAccount = () => {
+  const { showMessage, message, setUserData, userData, getUser, polishName } =
+    useGlobalContext();
+
   const [passwordData, setPasswordData] = useState({
     old: "",
     new: "",
@@ -45,7 +42,6 @@ const MyAccount = ({
 
   const updateName = async (e) => {
     e.preventDefault();
-
     setbtnStatus((btnData) => ({
       ...btnData,
       text: "saving",
@@ -54,9 +50,9 @@ const MyAccount = ({
 
     if (newName.length < 3) {
       showMessage(
+        true,
         "error-msg",
-        "please make sure name has three or more characters",
-        5000
+        "please make sure name has three or more characters"
       );
       setbtnStatus((btnData) => ({
         text: "save",
@@ -73,11 +69,11 @@ const MyAccount = ({
         disabled: true,
       }));
       setNewName("");
-      showMessage("success-msg", "Success: Username updated.", 5000);
+      showMessage(true, "success-msg", "Success: Username updated.");
       getUser();
       closeWindow("name");
     } catch (err) {
-      showMessage("error-msg", "Error: Please try again", 5000);
+      showMessage(true, "error-msg", "Error: Please try again");
 
       setNewName("");
       console.log("error has occured");
@@ -100,9 +96,9 @@ const MyAccount = ({
 
     if (passwordData.old.length < 6 || passwordData.new.length < 6) {
       showMessage(
+        true,
         "error-msg",
-        "please make sure both old and new passwords have six or more characters",
-        5000
+        "please make sure both old and new passwords have six or more characters"
       );
       setbtnStatus((btnData) => ({
         text: "save",
@@ -125,7 +121,7 @@ const MyAccount = ({
         old: "",
         new: "",
       });
-      showMessage("success-msg", "Success: Password Updated.", 5000);
+      showMessage(true, "success-msg", "Success: Password Updated.");
       closeWindow("password");
       getUser();
     } catch (err) {
@@ -138,9 +134,9 @@ const MyAccount = ({
         new: "",
       });
       if (err.response.data.msg)
-        return showMessage("error-msg", err.response.data.msg, 5000);
+        return showMessage(true, "error-msg", err.response.data.msg);
 
-      showMessage("error-msg", "Error: Please try again", 5000);
+      showMessage(true, "error-msg", "Error: Please try again");
     }
     setbtnStatus((btnData) => ({
       text: "Submit",
@@ -158,18 +154,14 @@ const MyAccount = ({
   };
 
   useEffect(() => {
+    showMessage();
+  }, [showMessage]);
+
+  useEffect(() => {
     if (!userData) {
       navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
-
-  useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [navigate, userData]);
 
   const closeWindow = (cat) => {
     if (cat === "name") {
@@ -197,6 +189,7 @@ const MyAccount = ({
                 <h1 style={{ marginBottom: "1rem" }}>
                   {polishName(userData.user.name)} Account
                 </h1>
+                {message.show && <Message />}
                 {!hideWindow && (
                   <div style={{ fontSize: "1.2rem" }}>
                     <p>
@@ -209,6 +202,7 @@ const MyAccount = ({
                       onClick={() => {
                         setUpdateNameWindow(true);
                         setHideWindow(true);
+                        showMessage();
                       }}
                     >
                       Update Username
@@ -218,6 +212,7 @@ const MyAccount = ({
                       onClick={() => {
                         setUpdatePasswordWindow(true);
                         setHideWindow(true);
+                        showMessage();
                       }}
                     >
                       Update Password
@@ -229,8 +224,6 @@ const MyAccount = ({
             {updateNameWindow && (
               <form onSubmit={updateName}>
                 <h3 className="sub-head">Update Username</h3>
-                {message && message}
-
                 <AccountFormRow
                   name="name"
                   type="text"
@@ -254,7 +247,6 @@ const MyAccount = ({
             {updatePasswordWindow && (
               <form onSubmit={updatePassword}>
                 <h3 className="sub-head">Update Password</h3>
-                {message && message}
 
                 <AccountFormRow
                   name="old"

@@ -5,8 +5,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
+import Message from "../components/Message";
+import { useGlobalContext } from "../context";
 
-const Login = ({ getUser, userData, showMessage, setMessage, message }) => {
+const Login = () => {
+  const { showMessage, message, userData, getUser } = useGlobalContext();
+
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -40,7 +44,7 @@ const Login = ({ getUser, userData, showMessage, setMessage, message }) => {
         email: "",
         password: "",
       }));
-      showMessage("success-msg", "Login successful. Loading...");
+      showMessage(true, "success-msg", "Login successful. Loading...");
       getUser();
     } catch (err) {
       setbtnStatus((btnData) => ({
@@ -54,12 +58,12 @@ const Login = ({ getUser, userData, showMessage, setMessage, message }) => {
       }));
 
       if (err.response.data.msg)
-        return showMessage("error-msg", err.response.data.msg, 5000);
+        return showMessage(true, "error-msg", err.response.data.msg);
 
       return showMessage(
+        true,
         "error-msg",
-        "Ooops, an error occured, please try again",
-        5000
+        "Ooops, an error occured, please try again"
       );
     }
   };
@@ -72,18 +76,14 @@ const Login = ({ getUser, userData, showMessage, setMessage, message }) => {
   };
 
   useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     if (userData) {
       navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [navigate, userData]);
+
+  useEffect(() => {
+    showMessage();
+  }, [showMessage]);
 
   return (
     <div>
@@ -91,7 +91,7 @@ const Login = ({ getUser, userData, showMessage, setMessage, message }) => {
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">Login</h1>
-          {message && message}
+          {message.show && <Message />}
           <form onSubmit={handleLogin}>
             <FormRow
               name="email"

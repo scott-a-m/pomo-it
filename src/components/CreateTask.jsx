@@ -1,14 +1,12 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useGlobalContext } from "../context";
+import Message from "./Message";
 
-const CreateTask = ({
-  setCreateTaskWindow,
-  getAllTasks,
-  showMessage,
-  message,
-  setMessage,
-}) => {
+const CreateTask = ({ setCreateTaskWindow, getAllTasks }) => {
+  const { showMessage, message } = useGlobalContext();
+
   const [taskData, setTaskData] = useState({
     task: "",
     info: "",
@@ -43,9 +41,9 @@ const CreateTask = ({
 
     if (deadlineMilliseconds < Date.now() + fiveMinutes) {
       showMessage(
+        true,
         "error-msg",
-        "please choose due time at least five minutes after current time",
-        5000
+        "please choose due time at least five minutes after current time"
       );
 
       setbtnStatus((btnData) => ({
@@ -86,9 +84,9 @@ const CreateTask = ({
       getAllTasks();
     } catch (err) {
       showMessage(
+        true,
         "error-msg",
-        "Ooops, an error occured, please try again",
-        5000
+        "Ooops, an error occured, please try again"
       );
       setTaskData(() => ({
         task: "",
@@ -111,19 +109,12 @@ const CreateTask = ({
     }));
   };
 
-  useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   if (match)
     return (
       <div className="tasks-list">
         <form onSubmit={createTask}>
           <h3 className="sub-head">Create Task</h3>
-          {message && message}
+          {message.show && <Message />}
           <div className="create-task-block">
             <div className="label-block">
               <label htmlFor="task" className="create-task-label">

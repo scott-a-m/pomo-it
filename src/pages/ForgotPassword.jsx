@@ -3,15 +3,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
+import Message from "../components/Message";
+import { useGlobalContext } from "../context";
 
-const ForgotPassword = ({
-  setMessage,
-  message,
-  showMessage,
-  userData,
-  setUserData,
-}) => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const { showMessage, message, userData, setUserData } = useGlobalContext();
 
   const [btnStatus, setbtnStatus] = useState({
     text: "Submit",
@@ -26,7 +23,6 @@ const ForgotPassword = ({
       text: "Processing",
       disabled: true,
     }));
-    console.log(email);
 
     try {
       await axios.post(`/api/v1/auth/forgot-password`, { email });
@@ -37,6 +33,7 @@ const ForgotPassword = ({
       }));
       setEmail("");
       showMessage(
+        true,
         "success-msg",
         "Success: Please check your email for reset password link."
       );
@@ -47,9 +44,9 @@ const ForgotPassword = ({
       }));
       setEmail("");
       if (err.response.data.msg)
-        return showMessage("error-msg", err.response.data.msg, 5000);
+        return showMessage(true, "error-msg", err.response.data.msg);
 
-      showMessage("error-msg", "Error: Please try again", 5000);
+      showMessage(true, "error-msg", "Error: Please try again");
     }
   };
 
@@ -58,11 +55,8 @@ const ForgotPassword = ({
   };
 
   useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    showMessage();
+  }, [showMessage]);
 
   return (
     <div>
@@ -70,7 +64,7 @@ const ForgotPassword = ({
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">Forgot Password</h1>
-          {message && message}
+          {message.show && <Message />}
           <form onSubmit={handleSubmit}>
             <FormRow
               name="email"
