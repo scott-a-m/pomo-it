@@ -171,7 +171,7 @@ const CreateTask = ({ setCreateTaskWindow, getAllTasks }) => {
       <div className="tasks-list">
         <form onSubmit={createTask} style={{ textAlign: "center" }}>
           <h3 className="sub-head">Create Task</h3>
-          {message && message}
+          {message && <Message />}
           <label htmlFor="task">Task</label>
           <input
             type="text"
