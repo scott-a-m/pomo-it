@@ -159,6 +159,7 @@ const CreateTask = ({ setCreateTaskWindow, getAllTasks }) => {
               className="edit-btn"
               disabled={btnStatus.disabled}
               style={{ margin: "1rem" }}
+              type="submit"
             >
               {btnStatus.text}
             </button>
@@ -204,6 +205,7 @@ const CreateTask = ({ setCreateTaskWindow, getAllTasks }) => {
               className="edit-btn"
               disabled={btnStatus.disabled}
               style={{ margin: "1rem" }}
+              type="submit"
             >
               {btnStatus.text}
             </button>

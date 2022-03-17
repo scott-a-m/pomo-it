@@ -238,6 +238,7 @@ const MyAccount = () => {
                   <button
                     className="edit-btn"
                     onClick={() => closeWindow("name")}
+                    type="submit"
                   >
                     Cancel
                   </button>
@@ -262,7 +263,11 @@ const MyAccount = () => {
                 />
                 <br />
                 <div className="btn-task">
-                  <button className="edit-btn" disabled={btnStatus.disabled}>
+                  <button
+                    className="edit-btn"
+                    disabled={btnStatus.disabled}
+                    type="submit"
+                  >
                     {btnStatus.text}
                   </button>
                   <button
@@ -335,7 +340,11 @@ const MyAccount = () => {
                 />
                 <br />
                 <div className="btn-task">
-                  <button className="edit-btn" disabled={btnStatus.disabled}>
+                  <button
+                    className="edit-btn"
+                    disabled={btnStatus.disabled}
+                    type="submit"
+                  >
                     {btnStatus.text}
                   </button>
                   <button
@@ -366,7 +375,11 @@ const MyAccount = () => {
                 />
                 <br />
                 <div className="btn-task">
-                  <button className="edit-btn" disabled={btnStatus.disabled}>
+                  <button
+                    className="edit-btn"
+                    disabled={btnStatus.disabled}
+                    type="submit"
+                  >
                     {btnStatus.text}
                   </button>
                   <button

@@ -73,7 +73,11 @@ const ForgotPassword = () => {
               onChangeFunc={handleChange}
             />
 
-            <button className="form-btn" disabled={btnStatus.disabled}>
+            <button
+              className="form-btn"
+              disabled={btnStatus.disabled}
+              type="submit"
+            >
               {btnStatus.text}
             </button>
           </form>

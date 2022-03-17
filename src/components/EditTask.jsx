@@ -192,7 +192,11 @@ const EditTask = ({
           <label htmlFor="done">Done</label>
         </div>
         <div className="btn-task">
-          <button className="edit-btn" disabled={btnStatus.disabled}>
+          <button
+            className="edit-btn"
+            disabled={btnStatus.disabled}
+            type="submit"
+          >
             {btnStatus.text}
           </button>
           <button className="edit-btn" onClick={cancelEdit}>
@@ -265,7 +269,11 @@ const EditTask = ({
           />
         </div>
         <div className="btn-task">
-          <button className="edit-btn" disabled={btnStatus.disabled}>
+          <button
+            className="edit-btn"
+            disabled={btnStatus.disabled}
+            type="submit"
+          >
             {btnStatus.text}
           </button>
           <button className="edit-btn" onClick={cancelEdit}>
