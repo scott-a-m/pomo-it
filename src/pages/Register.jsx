@@ -5,8 +5,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
+import { useGlobalContext } from "../context";
+import Message from "../components/Message";
 
-const Register = ({ userData, showMessage, message, setMessage }) => {
+const Register = () => {
+  const { showMessage, message, userData } = useGlobalContext();
+
   const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
@@ -31,9 +35,9 @@ const Register = ({ userData, showMessage, message, setMessage }) => {
 
     if (registerData.name.length < 3) {
       showMessage(
+        true,
         "error-msg",
-        "please make sure username has three or more characters",
-        5000
+        "please make sure username has three or more characters"
       );
       setbtnStatus((btnData) => ({
         ...btnData,
@@ -48,11 +52,11 @@ const Register = ({ userData, showMessage, message, setMessage }) => {
       return;
     }
 
-    if (registerData.password.length < 3) {
+    if (registerData.password.length < 6) {
       showMessage(
+        true,
         "error-msg",
-        "please make sure password has six or more characters",
-        5000
+        "please make sure password has six or more characters"
       );
       setbtnStatus((btnData) => ({
         text: "Register",
@@ -69,9 +73,9 @@ const Register = ({ userData, showMessage, message, setMessage }) => {
     try {
       await axios.post(`/api/v1/auth/register`, registerData);
       showMessage(
+        true,
         "success-msg",
-        "Success, please check Email for verification link",
-        10000
+        "Success, please check Email for verification link"
       );
       setRegisterData(() => ({
         name: "",
@@ -90,12 +94,12 @@ const Register = ({ userData, showMessage, message, setMessage }) => {
         password: "",
       }));
       if (err.response.data.msg)
-        return showMessage("error-msg", err.response.data.msg, 5000);
+        return showMessage(true, "error-msg", err.response.data.msg);
 
       return showMessage(
+        true,
         "error-msg",
-        "Ooops, an error occured, please try again",
-        5000
+        "Ooops, an error occured, please try again"
       );
     }
   };
@@ -115,11 +119,8 @@ const Register = ({ userData, showMessage, message, setMessage }) => {
   }, [userData]);
 
   useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    showMessage();
+  }, [showMessage]);
 
   return (
     <div>
@@ -127,7 +128,7 @@ const Register = ({ userData, showMessage, message, setMessage }) => {
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">Register</h1>
-          {message && message}
+          {message.show && <Message />}
           <form className="" onSubmit={handleRegister}>
             <FormRow
               name="name"

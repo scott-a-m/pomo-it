@@ -4,13 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useGlobalContext } from "../context";
 
-const HomeHeader = ({
-  userData,
-  setUserData,
-  setTasks,
-  setCreateTaskWindow,
-}) => {
+const HomeHeader = ({ setTasks, setCreateTaskWindow }) => {
+  const { setUserData, userData } = useGlobalContext();
+
   const [logoutBtn, setLogoutBtn] = useState(false);
   const navigate = useNavigate();
 

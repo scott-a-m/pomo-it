@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import About from "../components/About";
@@ -11,15 +11,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "../components/HomeHeader";
 import Welcome from "../components/Welcome";
+import { useGlobalContext } from "../context";
 
-const Home = ({
-  userData,
-  setUserData,
-  polishName,
-  showMessage,
-  message,
-  setMessage,
-}) => {
+const Home = () => {
+  const { showMessage, userData, polishName } = useGlobalContext();
+
   const [tasks, setTasks] = useState();
   const [createTaskWindow, setCreateTaskWindow] = useState(false);
   const [loadMoreDisplay, setLoadMoreDisplay] = useState(false);
@@ -75,9 +71,9 @@ const Home = ({
     return newDate;
   };
 
-  const loadMore = () => {
+  const loadMore = useCallback(() => {
     setDisplayItems(displayItems + 7);
-  };
+  }, [displayItems]);
 
   const openEditDeleteTaskWindow = (item, cat) => {
     setTaskData({
@@ -103,15 +99,6 @@ const Home = ({
     }
   };
 
-  // const deleteTask = async (taskId) => {
-  //   try {
-  //     await axios.delete(`/api/v1/tasks/delete-task/${taskId}`);
-  //     getAllTasks();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
     if (userData) {
       getAllTasks();
@@ -124,21 +111,11 @@ const Home = ({
         setLoadMoreDisplay(false);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadMore]);
-
-  useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [displayItems, loadMore, tasks]);
 
   return (
     <div>
       <HomeHeader
-        setUserData={setUserData}
-        userData={userData}
         setTasks={setTasks}
         setCreateTaskWindow={setCreateTaskWindow}
       />
@@ -160,14 +137,21 @@ const Home = ({
                 {createTaskWindow ? (
                   <FontAwesomeIcon
                     icon={faCircleMinus}
-                    onClick={() => setCreateTaskWindow(!createTaskWindow)}
+                    onClick={() => {
+                      setCreateTaskWindow(!createTaskWindow);
+                      showMessage();
+                    }}
                     size="2x"
                     className="create-task-icon"
                   />
                 ) : (
                   <FontAwesomeIcon
                     icon={faCirclePlus}
-                    onClick={() => setCreateTaskWindow(!createTaskWindow)}
+                    onClick={() => {
+                      setCreateTaskWindow(!createTaskWindow);
+                      showMessage();
+                      setItemId(null);
+                    }}
                     size="2x"
                     className="create-task-icon"
                   />
@@ -196,9 +180,6 @@ const Home = ({
               <CreateTask
                 setCreateTaskWindow={setCreateTaskWindow}
                 getAllTasks={getAllTasks}
-                showMessage={showMessage}
-                message={message}
-                setMessage={setMessage}
               />
             )}
 
@@ -211,9 +192,11 @@ const Home = ({
                         <h3 className="task-name">{item.task}</h3>
                         <button
                           className="delete-btn"
-                          onClick={() =>
-                            openEditDeleteTaskWindow(item, "delete")
-                          }
+                          onClick={() => {
+                            openEditDeleteTaskWindow(item, "delete");
+                            setCreateTaskWindow(false);
+                            showMessage();
+                          }}
                         >
                           Delete
                         </button>
@@ -236,7 +219,11 @@ const Home = ({
                         )}
                         <button
                           className="edit-btn"
-                          onClick={() => openEditDeleteTaskWindow(item, "edit")}
+                          onClick={() => {
+                            openEditDeleteTaskWindow(item, "edit");
+                            showMessage();
+                            setCreateTaskWindow(false);
+                          }}
                         >
                           Edit
                         </button>
@@ -254,9 +241,6 @@ const Home = ({
                         cat={cat}
                         setCat={setCat}
                         createDateTimeString={createDateTimeString}
-                        showMessage={showMessage}
-                        message={message}
-                        setMessage={setMessage}
                       />
                       <DeleteTask
                         getAllTasks={getAllTasks}
@@ -267,9 +251,6 @@ const Home = ({
                         setItemId={setItemId}
                         cat={cat}
                         setCat={setCat}
-                        showMessage={showMessage}
-                        message={message}
-                        setMessage={setMessage}
                       />
                     </div>
                   </div>

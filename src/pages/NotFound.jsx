@@ -1,8 +1,10 @@
 import React from "react";
 import FormHeader from "../components/FormHeader";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../context";
 
-const NotFound = ({ userData, setUserData }) => {
+const NotFound = () => {
+  const { setUserData, userData } = useGlobalContext();
   return (
     <div>
       <FormHeader userData={userData} setUserData={setUserData} />

@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useGlobalContext } from "../context";
+import Message from "./Message";
 
 const EditTask = ({
   taskData,
@@ -10,12 +12,11 @@ const EditTask = ({
   setItemId,
   itemId,
   createDateTimeString,
-  showMessage,
-  message,
-  setMessage,
   cat,
   setCat,
 }) => {
+  const { showMessage, message } = useGlobalContext();
+
   const [btnStatus, setbtnStatus] = useState({
     text: "Save",
     disabled: false,
@@ -54,9 +55,9 @@ const EditTask = ({
     if (originalDeadline !== taskData.due) {
       if (deadlineMilliseconds < Date.now() + fiveMinutes) {
         showMessage(
+          true,
           "error-msg",
-          "either keep original due time or choose one at least five minutes after current time",
-          5000
+          "either keep original due time or choose one at least five minutes after current time"
         );
 
         setbtnStatus((btnData) => ({
@@ -83,9 +84,9 @@ const EditTask = ({
       setCat(null);
     } catch (error) {
       showMessage(
+        true,
         "error-msg",
-        "Ooops, an error occured, please try again",
-        5000
+        "Ooops, an error occured, please try again"
       );
     }
     setbtnStatus((btnData) => ({
@@ -118,13 +119,6 @@ const EditTask = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId]);
 
-  useEffect(() => {
-    if (message) {
-      setMessage(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   if (match)
     return (
       <form
@@ -132,7 +126,7 @@ const EditTask = ({
         onSubmit={editTask}
       >
         <h3 className="sub-head">Edit Task</h3>
-        {message && message}
+        {message && <Message />}
 
         <div className="edit-task-block">
           <div className="label-block">

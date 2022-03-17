@@ -2,16 +2,14 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FormHeader from "../components/FormHeader";
 
-const VerifyEmail = ({ userData }) => {
+const VerifyEmail = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const query = new URLSearchParams(useLocation().search);
-
-  const navigate = useNavigate();
 
   const verifyUserToken = async () => {
     setLoading(true);
@@ -29,11 +27,9 @@ const VerifyEmail = ({ userData }) => {
   };
 
   useEffect(() => {
-    if (!userData) {
+    if (!loading) {
       return verifyUserToken();
     }
-    navigate("/dashboard");
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
