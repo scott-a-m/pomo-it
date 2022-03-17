@@ -209,7 +209,7 @@ const EditTask = ({
         style={{ textAlign: "center" }}
       >
         <h3 className="sub-head">Edit Task</h3>
-        {message && message}
+        {message && <Message />}
         <label htmlFor="task">Task</label>
 
         <input
