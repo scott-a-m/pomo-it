@@ -4,6 +4,8 @@ import EditTask from "../components/EditTask";
 
 import { useGlobalContext } from "../context";
 
+import { DateTime } from "luxon";
+
 const SingleTask = ({ task, info, createdAt, due, _id, complete }) => {
   const { showMessage, setDeleteWindow } = useGlobalContext();
   const [showInfo, setShowInfo] = useState(true);
@@ -15,44 +17,24 @@ const SingleTask = ({ task, info, createdAt, due, _id, complete }) => {
   });
 
   const displayDateTimeString = (date) => {
-    const tempDate = new Date(date).toLocaleString();
-
-    const dateArr = tempDate.split("/");
-    const dateArr2 = dateArr[2].split(",");
-
-    const newDate =
-      dateArr2[0] +
-      "-" +
-      dateArr[1] +
-      "-" +
-      dateArr[0] +
-      dateArr2[1].replace(" ", " at ").substring(0, 9);
-
-    return newDate;
+    return DateTime.fromISO(date).toLocaleString({
+      weekday: "short",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      year: "numeric",
+    });
   };
 
   const createDateTimeString = (date) => {
-    const tempDate = new Date(date).toLocaleString();
+    const tempDate = DateTime.fromISO(date)
+      .toLocaleString(DateTime.DATETIME_SHORT)
+      .split(", ");
 
-    const dateArr = tempDate.split("/");
-    const dateArr2 = dateArr[2].split(",");
-
-    const newDate =
-      dateArr2[0] +
-      "-" +
-      dateArr[1] +
-      "-" +
-      dateArr[0] +
-      dateArr2[1].replace(" ", "T").substring(0, 6);
-
-    // import { DateTime } from "luxon";
-
-    // const tempDate = new Date(date).toISOString();
-    // const isoDate = tempDate.substring(0, 19);
-    // const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    // const d = DateTime.fromISO(isoDate, { zone });
-    // console.log(d.toISO());
-    // console.log(d.toUTC().toISO());
+    const d1 = tempDate[0].split("/");
+    const year = d1[2] + "-" + d1[1] + "-" + d1[0];
+    const newDate = year + "T" + tempDate[1];
 
     return newDate;
   };
