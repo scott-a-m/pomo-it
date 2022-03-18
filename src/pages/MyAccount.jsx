@@ -8,7 +8,7 @@ import { useGlobalContext } from "../context";
 import Message from "../components/Message";
 
 const MyAccount = () => {
-  const { showMessage, message, setUserData, userData, getUser, polishName } =
+  const { showMessage, message, userData, getUser, polishName } =
     useGlobalContext();
 
   const [passwordData, setPasswordData] = useState({
@@ -186,7 +186,7 @@ const MyAccount = () => {
   if (match)
     return (
       <div>
-        <FormHeader userData={userData} setUserData={setUserData} />
+        <FormHeader />
         <div className="form-wrapper">
           <div className="form-box">
             {userData && (
@@ -291,7 +291,7 @@ const MyAccount = () => {
   else
     return (
       <div>
-        <FormHeader userData={userData} setUserData={setUserData} />
+        <FormHeader />
         <div className="form-wrapper">
           <div className="form-box">
             {userData && (

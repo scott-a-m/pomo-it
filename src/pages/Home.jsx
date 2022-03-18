@@ -28,7 +28,7 @@ const Home = () => {
   } = useGlobalContext();
 
   const [createTaskWindow, setCreateTaskWindow] = useState(false);
-  const [loadMoreDisplay, setLoadMoreDisplay] = useState(true);
+  const [loadMoreDisplay, setLoadMoreDisplay] = useState(false);
   const [displayItems, setDisplayItems] = useState(7);
 
   const [btnStatus, setbtnStatus] = useState({
@@ -86,7 +86,7 @@ const Home = () => {
 
   return (
     <div>
-      <HomeHeader setCreateTaskWindow={setCreateTaskWindow} />
+      <HomeHeader />
       <Welcome />
 
       <div>
@@ -144,7 +144,7 @@ const Home = () => {
               </div>
             )}
 
-            {createTaskWindow && (
+            {createTaskWindow && userData && (
               <CreateTask setCreateTaskWindow={setCreateTaskWindow} />
             )}
             {deleteSingleTask.open && (
@@ -185,7 +185,7 @@ const Home = () => {
                   .map((item, index) => <SingleTask key={index} {...item} />)}
             </div>
           </div>
-          {loadMoreDisplay && (
+          {loadMoreDisplay && tasks && (
             <div id="load-more">
               <button id="load-more-btn" onClick={loadMore}>
                 Load More

@@ -8,7 +8,7 @@ import { useGlobalContext } from "../context";
 import Message from "../components/Message";
 
 const ResetPassword = () => {
-  const { showMessage, message, userData, setUserData } = useGlobalContext();
+  const { showMessage, message } = useGlobalContext();
 
   const query = new URLSearchParams(useLocation().search);
 
@@ -91,7 +91,7 @@ const ResetPassword = () => {
 
   return (
     <div>
-      <FormHeader userData={userData} setUserData={setUserData} />
+      <FormHeader />
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">New Password</h1>
