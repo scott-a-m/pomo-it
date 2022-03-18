@@ -1,10 +1,18 @@
 import axios from "axios";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 
+// https://pomoit-server.herokuapp.com/
+
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
+
+  const [deleteSingleTask, setDeleteSingleTask] = useState({
+    open: false,
+    id: "",
+    task: "",
+  });
 
   const [message, setMessage] = useState({
     show: false,
@@ -12,14 +20,11 @@ const AppProvider = ({ children }) => {
     type: "",
   });
 
-  const getUser = async () => {
-    try {
-      const { data } = await axios.get("/api/v1/users/showMe");
-      setUserData(data);
-    } catch (error) {
-      console.log("error");
-      console.log(error);
-    }
+  const [loading, setLoading] = useState(false);
+  const [tasks, setTasks] = useState();
+
+  const setDeleteWindow = (open = false, id = "", task = "") => {
+    setDeleteSingleTask({ open, id, task });
   };
 
   const polishName = (string) => {
@@ -27,8 +32,46 @@ const AppProvider = ({ children }) => {
   };
 
   const showMessage = useCallback((show = false, type = "", msg = "") => {
+    console.log(show, type, msg);
+    console.log("component rendered");
     setMessage({ show, type, msg });
   }, []);
+
+  const getUser = async () => {
+    try {
+      console.log("getting user");
+      setLoading(true);
+      const { data } = await axios.get("/api/v1/users/showMe");
+      setUserData(data);
+      setLoading(false);
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const getAllTasks = async () => {
+    console.log("getting tasks");
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/api/v1/tasks/my-tasks");
+      const newData = [];
+      data.map((item) => newData.unshift(item));
+      console.log(newData);
+      setTasks(newData);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (userData) {
+      getAllTasks();
+    }
+  }, [userData]);
 
   useEffect(() => {
     getUser();
@@ -43,6 +86,13 @@ const AppProvider = ({ children }) => {
         setUserData,
         getUser,
         polishName,
+        loading,
+        setLoading,
+        tasks,
+        setTasks,
+        getAllTasks,
+        deleteSingleTask,
+        setDeleteWindow,
       }}
     >
       {children}

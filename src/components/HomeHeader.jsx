@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useGlobalContext } from "../context";
 
-const HomeHeader = ({ setTasks, setCreateTaskWindow }) => {
-  const { setUserData, userData } = useGlobalContext();
+const HomeHeader = ({ setCreateTaskWindow }) => {
+  const { setUserData, userData, setTasks } = useGlobalContext();
 
   const [logoutBtn, setLogoutBtn] = useState(false);
   const navigate = useNavigate();

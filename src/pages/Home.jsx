@@ -1,130 +1,99 @@
-import axios from "axios";
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import About from "../components/About";
 import Clock from "../components/Clock";
 import CreateTask from "../components/CreateTask";
-import EditTask from "../components/EditTask";
-import DeleteTask from "../components/DeleteTask";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "../components/HomeHeader";
 import Welcome from "../components/Welcome";
 import { useGlobalContext } from "../context";
+import SingleTask from "../components/SingleTask";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import axios from "axios";
 
 const Home = () => {
-  const { showMessage, userData, polishName } = useGlobalContext();
+  const {
+    showMessage,
+    message,
+    userData,
+    polishName,
+    loading,
+    tasks,
+    deleteSingleTask,
+    setDeleteWindow,
+    getAllTasks,
+  } = useGlobalContext();
 
-  const [tasks, setTasks] = useState();
   const [createTaskWindow, setCreateTaskWindow] = useState(false);
-  const [loadMoreDisplay, setLoadMoreDisplay] = useState(false);
-  const [taskData, setTaskData] = useState({
-    task: "",
-    info: "",
-    due: "",
-  });
-  const [itemId, setItemId] = useState(null);
-  const [cat, setCat] = useState(null);
+  const [loadMoreDisplay, setLoadMoreDisplay] = useState(true);
   const [displayItems, setDisplayItems] = useState(7);
 
-  const displayDateTimeString = (date) => {
-    const tempDate = new Date(date).toLocaleString();
+  const [btnStatus, setbtnStatus] = useState({
+    text: "DELETE",
+    disabled: false,
+  });
 
-    const dateArr = tempDate.split("/");
-    const dateArr2 = dateArr[2].split(",");
+  const cancelButton = useRef("");
 
-    const newDate =
-      dateArr2[0] +
-      "-" +
-      dateArr[1] +
-      "-" +
-      dateArr[0] +
-      dateArr2[1].replace(" ", " at ").substring(0, 9);
-
-    return newDate;
-  };
-
-  const createDateTimeString = (date) => {
-    const tempDate = new Date(date).toLocaleString();
-
-    const dateArr = tempDate.split("/");
-    const dateArr2 = dateArr[2].split(",");
-
-    const newDate =
-      dateArr2[0] +
-      "-" +
-      dateArr[1] +
-      "-" +
-      dateArr[0] +
-      dateArr2[1].replace(" ", "T").substring(0, 6);
-
-    // import { DateTime } from "luxon";
-
-    // const tempDate = new Date(date).toISOString();
-    // const isoDate = tempDate.substring(0, 19);
-    // const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    // const d = DateTime.fromISO(isoDate, { zone });
-    // console.log(d.toISO());
-    // console.log(d.toUTC().toISO());
-
-    return newDate;
+  const deleteTask = async (id) => {
+    setbtnStatus({
+      text: "DELETE",
+      disabled: true,
+    });
+    try {
+      await axios.delete(`/api/v1/tasks/delete-task/${id}`);
+      getAllTasks();
+      setDeleteWindow();
+    } catch (error) {
+      console.log(error.message);
+      showMessage(true, "error-msg", "Oops an error occured. Please try again");
+    }
+    setbtnStatus({
+      text: "DELETE",
+      disabled: false,
+    });
   };
 
   const loadMore = useCallback(() => {
+    if (tasks.length >= displayItems + 7) return;
     setDisplayItems(displayItems + 7);
-  }, [displayItems]);
 
-  const openEditDeleteTaskWindow = (item, cat) => {
-    setTaskData({
-      task: item.task,
-      info: item.info,
-      due: item.due,
-    });
-
-    setItemId(item._id);
-    setCat(cat);
-  };
-
-  const getAllTasks = async () => {
-    try {
-      const { data } = await axios.get("/api/v1/tasks/my-tasks");
-      const newData = [];
-      data.map((item) => newData.unshift(item));
-      console.log(newData);
-      setTasks(newData);
-      setLoadMoreDisplay(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    return setDisplayItems(displayItems + (tasks.length - displayItems));
+  }, [displayItems, tasks]);
 
   useEffect(() => {
-    if (userData) {
-      getAllTasks();
+    console.log("focus");
+    if (deleteSingleTask.id) {
+      cancelButton.current.focus();
     }
-  }, [userData]);
+  }, [deleteSingleTask.id]);
 
   useEffect(() => {
     if (tasks) {
       if (displayItems >= tasks.length) {
-        setLoadMoreDisplay(false);
+        return setLoadMoreDisplay(false);
       }
+      return setLoadMoreDisplay(true);
     }
   }, [displayItems, loadMore, tasks]);
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div>
-      <HomeHeader
-        setTasks={setTasks}
-        setCreateTaskWindow={setCreateTaskWindow}
-      />
+      <HomeHeader setCreateTaskWindow={setCreateTaskWindow} />
       <Welcome />
 
       <div>
         <div id="clock-block">
           <Clock />
         </div>
+
         <div id="task-block">
           <div id="task-wrapper">
             {userData ? (
@@ -150,7 +119,6 @@ const Home = () => {
                     onClick={() => {
                       setCreateTaskWindow(!createTaskWindow);
                       showMessage();
-                      setItemId(null);
                     }}
                     size="2x"
                     className="create-task-icon"
@@ -177,84 +145,44 @@ const Home = () => {
             )}
 
             {createTaskWindow && (
-              <CreateTask
-                setCreateTaskWindow={setCreateTaskWindow}
-                getAllTasks={getAllTasks}
-              />
+              <CreateTask setCreateTaskWindow={setCreateTaskWindow} />
+            )}
+            {deleteSingleTask.open && (
+              <div
+                className="delete-task-block"
+                style={{ marginTop: "2rem", marginBottom: "2rem" }}
+              >
+                <h3 className="sub-head">Delete Task</h3>
+                {message.show && <Message />}
+                <div className="error-msg">
+                  <p>Are you sure you want to delete Task:</p>
+                  <p className="delete-task-name">{deleteSingleTask.task}</p>
+                </div>
+                <div className="btn-task">
+                  <button
+                    className="edit-btn"
+                    disabled={btnStatus.disabled}
+                    onClick={() => deleteTask(deleteSingleTask.id)}
+                  >
+                    {btnStatus.text}
+                  </button>
+                  <button
+                    className="edit-btn"
+                    onClick={() => setDeleteWindow()}
+                    style={{ color: "black" }}
+                    ref={cancelButton}
+                  >
+                    CANCEL
+                  </button>
+                </div>
+              </div>
             )}
 
             <div>
               {tasks &&
-                tasks.slice(0, displayItems).map((item, index) => (
-                  <div key={index} className="tasks-list">
-                    <div hidden={item._id === itemId ? true : false}>
-                      <div>
-                        <h3 className="task-name">{item.task}</h3>
-                        <button
-                          className="delete-btn"
-                          onClick={() => {
-                            openEditDeleteTaskWindow(item, "delete");
-                            setCreateTaskWindow(false);
-                            showMessage();
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                      <p>{item.info}</p>
-                      <p className="date">
-                        <strong>Start: </strong>
-                        {displayDateTimeString(item.createdAt)}
-                        <br />
-                        <strong>Finish: </strong>
-                        {displayDateTimeString(item.due)}
-                      </p>
-                      <div className="btn-task">
-                        {item.complete === false ? (
-                          <p className="status-incomplete">
-                            Incomplete &#128528;
-                          </p>
-                        ) : (
-                          <p className="status-complete">Done &#128515;</p>
-                        )}
-                        <button
-                          className="edit-btn"
-                          onClick={() => {
-                            openEditDeleteTaskWindow(item, "edit");
-                            showMessage();
-                            setCreateTaskWindow(false);
-                          }}
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    </div>
-
-                    <div>
-                      <EditTask
-                        getAllTasks={getAllTasks}
-                        taskData={taskData}
-                        setTaskData={setTaskData}
-                        taskId={item._id}
-                        itemId={itemId}
-                        setItemId={setItemId}
-                        cat={cat}
-                        setCat={setCat}
-                        createDateTimeString={createDateTimeString}
-                      />
-                      <DeleteTask
-                        getAllTasks={getAllTasks}
-                        taskData={taskData}
-                        setTaskData={setTaskData}
-                        taskId={item._id}
-                        itemId={itemId}
-                        setItemId={setItemId}
-                        cat={cat}
-                        setCat={setCat}
-                      />
-                    </div>
-                  </div>
-                ))}
+                tasks
+                  .slice(0, displayItems)
+                  .map((item, index) => <SingleTask key={index} {...item} />)}
             </div>
           </div>
           {loadMoreDisplay && (

@@ -7,9 +7,11 @@ import FormRow from "../components/FormRow";
 import FormHeader from "../components/FormHeader";
 import Message from "../components/Message";
 import { useGlobalContext } from "../context";
+import Loader from "../components/Loader";
 
 const Login = () => {
-  const { showMessage, message, userData, getUser } = useGlobalContext();
+  const { showMessage, message, userData, getUser, loading } =
+    useGlobalContext();
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -84,6 +86,8 @@ const Login = () => {
   useEffect(() => {
     showMessage();
   }, [showMessage]);
+
+  if (loading) return <Loader />;
 
   return (
     <div>
