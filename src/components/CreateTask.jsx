@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useGlobalContext } from "../context";
 import Message from "./Message";
 
-const CreateTask = ({ setCreateTaskWindow, getAllTasks }) => {
-  const { showMessage, message } = useGlobalContext();
+const CreateTask = ({ setCreateTaskWindow }) => {
+  const { showMessage, message, getAllTasks } = useGlobalContext();
 
   const [taskData, setTaskData] = useState({
     task: "",
@@ -29,6 +29,11 @@ const CreateTask = ({ setCreateTaskWindow, getAllTasks }) => {
     window
       .matchMedia("(min-width: 650px)")
       .addEventListener("change", checkWidth);
+
+    return () =>
+      window
+        .matchMedia("(min-width: 650px)")
+        .removeEventListener("change", checkWidth);
   });
 
   const createTask = async (e) => {
@@ -80,8 +85,8 @@ const CreateTask = ({ setCreateTaskWindow, getAllTasks }) => {
         disabled: false,
       }));
 
-      setCreateTaskWindow(false);
       getAllTasks();
+      setCreateTaskWindow(false);
     } catch (err) {
       showMessage(
         true,
@@ -172,7 +177,7 @@ const CreateTask = ({ setCreateTaskWindow, getAllTasks }) => {
       <div className="tasks-list">
         <form onSubmit={createTask} style={{ textAlign: "center" }}>
           <h3 className="sub-head">Create Task</h3>
-          {message && <Message />}
+          {message.show && <Message />}
           <label htmlFor="task">Task</label>
           <input
             type="text"

@@ -38,6 +38,11 @@ const MyAccount = () => {
     window
       .matchMedia("(min-width: 650px)")
       .addEventListener("change", checkWidth);
+
+    return () =>
+      window
+        .matchMedia("(min-width: 650px)")
+        .removeEventListener("change", checkWidth);
   });
 
   const updateName = async (e) => {
@@ -69,7 +74,7 @@ const MyAccount = () => {
         disabled: true,
       }));
       setNewName("");
-      showMessage(true, "success-msg", "Success: Username updated.");
+      showMessage(true, "success-msg", "username updated.");
       getUser();
       closeWindow("name");
     } catch (err) {
@@ -121,7 +126,7 @@ const MyAccount = () => {
         old: "",
         new: "",
       });
-      showMessage(true, "success-msg", "Success: Password Updated.");
+      showMessage(true, "success-msg", "password updated.");
       closeWindow("password");
       getUser();
     } catch (err) {
@@ -308,6 +313,7 @@ const MyAccount = () => {
                       onClick={() => {
                         setUpdateNameWindow(true);
                         setHideWindow(true);
+                        showMessage();
                       }}
                       style={{ margin: "0.5rem" }}
                     >
@@ -318,6 +324,7 @@ const MyAccount = () => {
                       onClick={() => {
                         setUpdatePasswordWindow(true);
                         setHideWindow(true);
+                        showMessage();
                       }}
                       style={{ margin: "0.5rem" }}
                     >
@@ -330,7 +337,7 @@ const MyAccount = () => {
             {updateNameWindow && (
               <form onSubmit={updateName}>
                 <h3 className="sub-head">Update Username</h3>
-                {message && message}
+                {message.show && <Message />}
 
                 <AccountFormRow
                   name="name"
@@ -359,7 +366,7 @@ const MyAccount = () => {
             {updatePasswordWindow && (
               <form onSubmit={updatePassword}>
                 <h3 className="sub-head">Update Password</h3>
-                {message && message}
+                {message.show && <Message />}
 
                 <AccountFormRow
                   name="old"

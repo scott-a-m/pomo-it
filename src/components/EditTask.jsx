@@ -4,18 +4,8 @@ import { useState } from "react";
 import { useGlobalContext } from "../context";
 import Message from "./Message";
 
-const EditTask = ({
-  taskData,
-  setTaskData,
-  getAllTasks,
-  taskId,
-  setItemId,
-  itemId,
-  createDateTimeString,
-  cat,
-  setCat,
-}) => {
-  const { showMessage, message } = useGlobalContext();
+const EditTask = ({ taskData, setTaskData, taskId, due, setShowEdit }) => {
+  const { showMessage, message, getAllTasks } = useGlobalContext();
 
   const [btnStatus, setbtnStatus] = useState({
     text: "Save",
@@ -35,6 +25,11 @@ const EditTask = ({
     window
       .matchMedia("(min-width: 650px)")
       .addEventListener("change", checkWidth);
+
+    return () =>
+      window
+        .matchMedia("(min-width: 650px)")
+        .removeEventListener("change", checkWidth);
   });
 
   const editTask = async (e) => {
@@ -80,8 +75,6 @@ const EditTask = ({
         complete: taskData.complete,
       });
       getAllTasks();
-      setItemId("");
-      setCat(null);
     } catch (error) {
       showMessage(
         true,
@@ -96,11 +89,6 @@ const EditTask = ({
     }));
   };
 
-  const cancelEdit = (e) => {
-    e.preventDefault();
-    setItemId("");
-  };
-
   const handleChange = (e) => {
     setTaskData((data) => ({
       ...data,
@@ -109,24 +97,14 @@ const EditTask = ({
   };
 
   useEffect(() => {
-    if (itemId) {
-      setTaskData((data) => ({
-        ...data,
-        due: createDateTimeString(taskData.due),
-      }));
-      setOriginalDeadline(createDateTimeString(taskData.due));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemId]);
+    setOriginalDeadline(due);
+  }, [due]);
 
   if (match)
     return (
-      <form
-        hidden={itemId === taskId && cat === "edit" ? false : true}
-        onSubmit={editTask}
-      >
+      <form onSubmit={editTask}>
         <h3 className="sub-head">Edit Task</h3>
-        {message && <Message />}
+        {message.show && <Message />}
 
         <div className="edit-task-block">
           <div className="label-block">
@@ -199,7 +177,7 @@ const EditTask = ({
           >
             {btnStatus.text}
           </button>
-          <button className="edit-btn" onClick={cancelEdit}>
+          <button className="edit-btn" onClick={() => setShowEdit(false)}>
             Cancel
           </button>
         </div>
@@ -207,13 +185,9 @@ const EditTask = ({
     );
   else
     return (
-      <form
-        hidden={itemId === taskId && cat === "edit" ? false : true}
-        onSubmit={editTask}
-        style={{ textAlign: "center" }}
-      >
+      <form onSubmit={editTask} style={{ textAlign: "center" }}>
         <h3 className="sub-head">Edit Task</h3>
-        {message && <Message />}
+        {message.show && <Message />}
         <label htmlFor="task">Task</label>
 
         <input
@@ -276,7 +250,7 @@ const EditTask = ({
           >
             {btnStatus.text}
           </button>
-          <button className="edit-btn" onClick={cancelEdit}>
+          <button className="edit-btn" onClick={() => setShowEdit(false)}>
             Cancel
           </button>
         </div>

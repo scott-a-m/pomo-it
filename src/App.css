@@ -313,7 +313,8 @@ h2 {
 }
 
 .delete-task-name {
-  font-size: 2rem;
+  font-size: 1.8rem;
+  font-family: 'Akaya Telivigala', cursive;
 }
 
 .form-label {

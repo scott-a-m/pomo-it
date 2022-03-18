@@ -35,7 +35,7 @@ const ForgotPassword = () => {
       showMessage(
         true,
         "success-msg",
-        "Success: Please check your email for reset password link."
+        "Submitted. Please check your email for reset password link."
       );
     } catch (err) {
       setbtnStatus((btnData) => ({
