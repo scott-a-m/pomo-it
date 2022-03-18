@@ -91,7 +91,7 @@ const Login = () => {
 
   return (
     <div>
-      <FormHeader userData={userData} />
+      <FormHeader />
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">Login</h1>

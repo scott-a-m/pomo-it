@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useGlobalContext } from "../context";
 
-const HomeHeader = ({ setCreateTaskWindow }) => {
+const HomeHeader = () => {
   const { setUserData, userData, setTasks } = useGlobalContext();
 
   const [logoutBtn, setLogoutBtn] = useState(false);
@@ -16,10 +16,8 @@ const HomeHeader = ({ setCreateTaskWindow }) => {
     setLogoutBtn(true);
     try {
       await axios.delete("/api/v1/auth/logout");
-      console.log(userData);
-      setUserData(null);
       setTasks(null);
-      setCreateTaskWindow(false);
+      setUserData(null);
       navigate("/");
     } catch (error) {
       console.log(error);

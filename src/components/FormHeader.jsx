@@ -4,14 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useGlobalContext } from "../context";
 
-const FormHeader = ({ userData, setUserData }) => {
+const FormHeader = () => {
+  const { setUserData, userData, setTasks } = useGlobalContext();
+
   const [logoutBtn, setLogoutBtn] = useState(false);
 
   const logoutUser = async () => {
     setLogoutBtn(true);
     try {
       await axios.delete("/api/v1/auth/logout");
+      setTasks(null);
       setUserData(null);
     } catch (error) {
       console.log(error);

@@ -8,7 +8,7 @@ import { useGlobalContext } from "../context";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const { showMessage, message, userData, setUserData } = useGlobalContext();
+  const { showMessage, message } = useGlobalContext();
 
   const [btnStatus, setbtnStatus] = useState({
     text: "Submit",
@@ -60,7 +60,7 @@ const ForgotPassword = () => {
 
   return (
     <div>
-      <FormHeader userData={userData} setUserData={setUserData} />
+      <FormHeader />
       <div className="form-wrapper">
         <div className="form-box">
           <h1 className="">Forgot Password</h1>
