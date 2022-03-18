@@ -58,8 +58,8 @@ const Home = () => {
   };
 
   const loadMore = useCallback(() => {
-    if (tasks.length >= displayItems + 7) return;
-    setDisplayItems(displayItems + 7);
+    if (tasks.length >= displayItems + 7)
+      return setDisplayItems(displayItems + 7);
 
     return setDisplayItems(displayItems + (tasks.length - displayItems));
   }, [displayItems, tasks]);
