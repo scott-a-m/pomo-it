@@ -115,8 +115,7 @@ const Register = () => {
     if (userData) {
       navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [navigate, userData]);
 
   useEffect(() => {
     showMessage();

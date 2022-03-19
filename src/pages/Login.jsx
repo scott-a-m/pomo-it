@@ -23,6 +23,8 @@ const Login = () => {
     disabled: false,
   });
 
+  const loaderPosition = "100vh";
+
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -87,7 +89,7 @@ const Login = () => {
     showMessage();
   }, [showMessage]);
 
-  if (loading) return <Loader />;
+  if (loading) return <Loader loaderPosition={loaderPosition} />;
 
   return (
     <div>

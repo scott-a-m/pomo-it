@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./Index.css";
 import App from "./App";
 import { AppProvider } from "./context";
 
@@ -10,5 +9,5 @@ ReactDOM.render(
       <App />
     </AppProvider>
   </React.StrictMode>,
-  document.getElementById("my-clock")
+  document.getElementById("root")
 );
