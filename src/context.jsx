@@ -32,37 +32,29 @@ const AppProvider = ({ children }) => {
   };
 
   const showMessage = useCallback((show = false, type = "", msg = "") => {
-    console.log(show, type, msg);
-    console.log("component rendered");
     setMessage({ show, type, msg });
   }, []);
 
   const getUser = async () => {
     try {
-      console.log("getting user");
       setLoading(true);
       const { data } = await axios.get("/api/v1/users/showMe");
       setUserData(data);
       setLoading(false);
     } catch (error) {
-      console.log("error");
-      console.log(error);
       setLoading(false);
     }
   };
 
   const getAllTasks = async () => {
-    console.log("getting tasks");
     try {
       setLoading(true);
       const { data } = await axios.get("/api/v1/tasks/my-tasks");
       const newData = [];
       data.map((item) => newData.unshift(item));
-      console.log(newData);
       setTasks(newData);
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };

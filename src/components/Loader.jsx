@@ -10,7 +10,7 @@ const Loader = ({ loaderPosition }) => {
     >
       <div className="form-box">
         <p className="logo" style={{ fontSize: "3rem" }}>
-          Pomo-i
+          Pomo-it
           <FontAwesomeIcon icon={faSeedling} />
         </p>
         <p className="task-name">
