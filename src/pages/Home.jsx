@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import About from "../components/About";
@@ -32,15 +32,13 @@ const Home = () => {
   const [displayItems, setDisplayItems] = useState(7);
 
   const [btnStatus, setbtnStatus] = useState({
-    text: "DELETE",
+    text: "Delete",
     disabled: false,
   });
 
-  const cancelButton = useRef("");
-
   const deleteTask = async (id) => {
     setbtnStatus({
-      text: "DELETE",
+      text: "Deleting",
       disabled: true,
     });
     try {
@@ -51,7 +49,7 @@ const Home = () => {
       showMessage(true, "error-msg", "Oops an error occured. Please try again");
     }
     setbtnStatus({
-      text: "DELETE",
+      text: "Delete",
       disabled: false,
     });
   };
@@ -64,12 +62,6 @@ const Home = () => {
   }, [displayItems, tasks]);
 
   useEffect(() => {
-    if (deleteSingleTask.id) {
-      cancelButton.current.focus();
-    }
-  }, [deleteSingleTask.id]);
-
-  useEffect(() => {
     if (tasks) {
       if (displayItems >= tasks.length) {
         return setLoadMoreDisplay(false);
@@ -77,10 +69,6 @@ const Home = () => {
       return setLoadMoreDisplay(true);
     }
   }, [displayItems, loadMore, tasks]);
-
-  // if (loading) {
-  //   return <Loader />;
-  // }
 
   return (
     <div>
@@ -170,7 +158,6 @@ const Home = () => {
                       className="edit-btn"
                       onClick={() => setDeleteWindow()}
                       style={{ color: "black" }}
-                      ref={cancelButton}
                     >
                       CANCEL
                     </button>
@@ -180,6 +167,7 @@ const Home = () => {
 
               <div>
                 {tasks &&
+                  !deleteSingleTask.open &&
                   tasks
                     .slice(0, displayItems)
                     .map((item, index) => <SingleTask key={index} {...item} />)}
