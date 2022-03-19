@@ -18,11 +18,11 @@ const HomeHeader = () => {
       await axios.delete("/api/v1/auth/logout");
       setTasks(null);
       setUserData(null);
+      setLogoutBtn(false);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      setLogoutBtn(false);
     }
-    setLogoutBtn(false);
   };
 
   return (

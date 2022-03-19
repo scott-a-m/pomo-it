@@ -79,10 +79,7 @@ const MyAccount = () => {
       closeWindow("name");
     } catch (err) {
       showMessage(true, "error-msg", "Error: Please try again");
-
       setNewName("");
-      console.log("error has occured");
-      console.log(err.message);
     }
     setbtnStatus((btnData) => ({
       text: "save",

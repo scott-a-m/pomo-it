@@ -102,8 +102,6 @@ const CreateTask = ({ setCreateTaskWindow }) => {
         text: "Create",
         disabled: false,
       }));
-      console.log("error has occured");
-      console.log(err.message);
     }
   };
 

@@ -14,13 +14,11 @@ const VerifyEmail = () => {
   const verifyUserToken = async () => {
     setLoading(true);
     try {
-      console.log(query.get("token"), query.get("email"));
       await axios.post("/api/v1/auth/verify-email", {
         verificationToken: query.get("token"),
         email: query.get("email"),
       });
     } catch (error) {
-      console.log(error);
       setError(true);
     }
     setLoading(false);

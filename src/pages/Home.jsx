@@ -48,7 +48,6 @@ const Home = () => {
       getAllTasks();
       setDeleteWindow();
     } catch (error) {
-      console.log(error.message);
       showMessage(true, "error-msg", "Oops an error occured. Please try again");
     }
     setbtnStatus({
@@ -65,7 +64,6 @@ const Home = () => {
   }, [displayItems, tasks]);
 
   useEffect(() => {
-    console.log("focus");
     if (deleteSingleTask.id) {
       cancelButton.current.focus();
     }
