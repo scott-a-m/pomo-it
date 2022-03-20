@@ -1,3 +1,7 @@
+:root {
+  --transition: all 0.4s linear;
+}
+
 body::before {
   content: '';
   position: fixed;
@@ -26,7 +30,6 @@ body::before {
 .sub-head {
   font-family: 'Akaya Telivigala', cursive;
   text-align: center;
-
 }
 
 .date {
@@ -41,15 +44,12 @@ body::before {
 .navbar-link {
   color: white !important;
   text-decoration: none !important;
+  transition: var(--transition);
 }
 
 .navbar-link:hover {
   text-decoration: underline !important;
 }
-
-
-
-
 
 .logout-btn {
   background-color: white;
@@ -58,7 +58,7 @@ body::before {
   color: hsl(0, 100%, 50%);
   width: 100px;
   margin-left: 0.5rem;
-
+  transition: var(--transition);
 }
 
 .logout-btn:hover {
@@ -80,7 +80,7 @@ body::before {
   border-radius: 0.2rem;
   color: hsl(0, 100%, 50%);
   font-size: 1.2rem;
-
+  transition: var(--transition);
 }
 
 #load-more-btn:hover {
@@ -98,13 +98,10 @@ body::before {
   border-radius: 0.2rem;
 }
 
-
-
 h1 {
   font-family: 'Akaya Telivigala', cursive;
   font-size: 3rem;
   text-align: center;
-
 }
 
 h2 {
@@ -112,11 +109,9 @@ h2 {
   font-size: 2.5rem;
 }
 
-
 #clock-block {
   margin-top: 4rem;
   margin-bottom: 5rem;
-
 }
 
 .create-task-block {
@@ -131,13 +126,10 @@ h2 {
   justify-content: end;
   padding-top: 1rem;
   padding-bottom: 1rem;
-
 }
 
 .input-block {
   grid-column: span 4;
-
-
 }
 
 .label-block {
@@ -145,20 +137,18 @@ h2 {
   font-family: 'Akaya Telivigala', cursive;
   text-align: right;
   padding-right: 0.5rem;
-
-
 }
 
+.link {
+  transition: var(--transition);
 
-
-
+}
 
 .link:hover {
   color: red !important;
   background-color: white;
   text-decoration: none;
 }
-
 
 .status-incomplete {
   color: red;
@@ -177,9 +167,7 @@ h2 {
 .btn-task {
   display: flex;
   justify-content: space-between;
-
 }
-
 
 #task-block {
   background-color: hsl(0, 100%, 65%);
@@ -208,9 +196,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
-
 
 .form-input {
   width: 100%;
@@ -222,7 +208,6 @@ h2 {
   border-radius: 0.5rem;
   margin: 1rem;
   overflow-wrap: break-word;
-
 }
 
 .btn {
@@ -230,6 +215,7 @@ h2 {
   background-color: white;
   color: red;
   text-align: center;
+  transition: var(--transition);
 
 }
 
@@ -242,8 +228,7 @@ h2 {
   margin-bottom: 1rem;
   font-size: 1.2rem;
   padding: 0.5rem;
-
-
+  transition: var(--transition);
 }
 
 .account-form-btn {
@@ -257,15 +242,13 @@ h2 {
   margin-left: 1rem;
   font-size: 1rem;
   padding: 0.5rem;
-
-
+  transition: var(--transition);
 }
 
 .account-form-btn:hover {
   border-radius: 1rem;
   border: hsl(0, 100%, 50%) 1px;
   background-color: hsl(0, 100%, 50%);
-  ;
   color: white;
 }
 
@@ -273,7 +256,6 @@ h2 {
   border-radius: 1rem;
   border: hsl(0, 100%, 50%) 1px;
   background-color: hsl(0, 100%, 50%);
-  ;
   color: white;
 }
 
@@ -282,13 +264,12 @@ h2 {
   border-radius: 3rem;
   background-color: white;
   border: 1px white;
-
   color: hsl(0, 100%, 50%);
   text-align: center;
   height: 30px;
   min-width: 70px;
   margin-left: 10px;
-
+  transition: var(--transition);
 }
 
 .edit-btn:hover:enabled {
@@ -309,7 +290,7 @@ h2 {
   height: 30px;
   min-width: 70px;
   margin-left: 10px;
-
+  transition: var(--transition);
 }
 
 .delete-btn:hover:enabled {
@@ -376,6 +357,8 @@ h2 {
 
 .success-link {
   color: green !important;
+  transition: var(--transition);
+
 }
 
 .success-link:hover {
@@ -388,15 +371,21 @@ h2 {
   background-color: hsl(0, 100%, 75%);
   color: white;
   border: none;
+  transition: var(--transition);
+
 }
 
 #session-decrement, #break-decrement {
   margin-right: 3rem;
   margin-bottom: 2rem;
+  transition: var(--transition);
+
 }
 
 #start_stop, #reset {
-  border: none
+  border: none;
+  transition: var(--transition);
+
 }
 
 
@@ -447,7 +436,9 @@ h2 {
 
 #start_stop, #reset {
   background-color: hsl(0, 100%, 70%);
-  color: white
+  color: white;
+  transition: var(--transition);
+
 }
 
 .task-name {
@@ -512,6 +503,8 @@ h2 {
 
 .start-link {
   text-decoration: none;
+  transition: var(--transition);
+
 }
 
 .start-link:hover {
@@ -521,15 +514,18 @@ h2 {
 }
 
 a {
-  color: white
+  color: white;
+  transition: var(--transition);
+
+
 }
 
 a:visited {
-  color: white
+  color: white;
 }
 
 a:hover {
-  color: white
+  color: white;
 }
 
 .about-link:hover {
@@ -565,6 +561,8 @@ a:hover {
 .contact-icon {
   margin-left: 0.3rem;
   margin-right: 0.3rem;
+  transition: var(--transition);
+
 }
 
 .contact-icon:hover {
@@ -602,8 +600,6 @@ a:hover {
 
     font-size: 2rem;
   }
-
-
 
 
   #frame {
@@ -693,11 +689,7 @@ a:hover {
 
 
 
-
-
-
 #start_stop:hover, #reset:hover, #break-decrement:hover, #break-increment:hover, #session-decrement:hover, #session-increment:hover {
-  /*   filter: invert(100%); */
   color: red;
 
 }
