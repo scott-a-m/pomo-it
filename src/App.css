@@ -198,6 +198,12 @@ h2 {
   align-items: center;
 }
 
+.form-label {
+  font-size: 1.2rem;
+  text-align: center;
+  display: block;
+}
+
 .form-input {
   width: 100%;
 }
@@ -309,11 +315,7 @@ h2 {
   font-family: 'Akaya Telivigala', cursive;
 }
 
-.form-label {
-  font-size: 1.2rem;
-  text-align: center;
-  display: block;
-}
+
 
 .create-task-label {
   font-size: 1.2rem;
