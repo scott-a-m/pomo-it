@@ -148,7 +148,7 @@ const Home = () => {
                   </div>
                   <div className="btn-task">
                     <button
-                      className="edit-btn"
+                      className="delete-btn"
                       disabled={btnStatus.disabled}
                       onClick={() => deleteTask(deleteSingleTask.id)}
                     >
@@ -157,9 +157,8 @@ const Home = () => {
                     <button
                       className="edit-btn"
                       onClick={() => setDeleteWindow()}
-                      style={{ color: "black" }}
                     >
-                      CANCEL
+                      Cancel
                     </button>
                   </div>
                 </div>
