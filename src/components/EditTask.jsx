@@ -47,7 +47,10 @@ const EditTask = ({ taskData, setTaskData, taskId, due, setShowEdit }) => {
     const fiveMinutes = 1000 * 60 * 5;
     const deadlineMilliseconds = new Date(taskData.due).getTime();
 
-    if (originalDeadline !== taskData.due) {
+    const tempDate = new Date(taskData.due).toISOString();
+    const isoDate = tempDate.substring(0, 19);
+
+    if (originalDeadline.substring(0, 19) !== isoDate) {
       if (deadlineMilliseconds < Date.now() + fiveMinutes) {
         showMessage(
           true,
@@ -63,9 +66,6 @@ const EditTask = ({ taskData, setTaskData, taskId, due, setShowEdit }) => {
         return;
       }
     }
-
-    const tempDate = new Date(taskData.due).toISOString();
-    const isoDate = tempDate.substring(0, 19);
 
     try {
       await axios.patch(`/api/v1/tasks/edit-task/${taskId}`, {
