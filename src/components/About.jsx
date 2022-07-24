@@ -44,7 +44,12 @@ class About extends React.Component {
           </strong>
         </p>
         <div id="contact-block">
-          <p id="designer">developed by Scott Mitchell</p>
+          <h3 id="designer">developed by  <a
+            href="https://scottsdev.net"
+            target="_blank"
+            rel="noreferrer"
+            className="about-link"
+          >Scott Mitchell</a></h3>
           <a
             href="https://github.com/scott-a-m"
             target="_blank"
