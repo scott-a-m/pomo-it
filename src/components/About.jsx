@@ -13,7 +13,7 @@ class About extends React.Component {
       <div id="about">
         <h1 id="about-title">What is Pomo-it?</h1>
         <p>
-          <span id="pomo-it">Pomo-it</span> a time management app featuring a{" "}
+          <span id="pomo-it">Pomo-it</span> is a time management app featuring a{" "}
           <a href="#frame" className="about-link">
             timer
           </a>{" "}
@@ -44,12 +44,17 @@ class About extends React.Component {
           </strong>
         </p>
         <div id="contact-block">
-          <h3 id="designer">developed by  <a
-            href="https://scottsdev.net"
-            target="_blank"
-            rel="noreferrer"
-            className="about-link"
-          >Scott Mitchell</a></h3>
+          <h3 id="designer">
+            developed by{" "}
+            <a
+              href="https://scottsdev.net"
+              target="_blank"
+              rel="noreferrer"
+              className="about-link"
+            >
+              Scott Mitchell
+            </a>
+          </h3>
           <a
             href="https://github.com/scott-a-m"
             target="_blank"
